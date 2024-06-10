@@ -36,17 +36,17 @@ export const registerHealthworkeraccount = Trycatch(async (req, res, next) => {
       msg: "A user with this email exist",
     });
   }
-  const findcompany = await hospital.findOne({
-    oragnizationName : oragnizationName,
-  });
- const companyconfirm = findcompany.all_workers_id.filter(
-   (id) => id === healthWorkerId
- );
- if (!companyconfirm){
-     return res.status(StatusCodes.BAD_REQUEST).json({
-        msg:"Kindly contact your Health Institution so you can be added as a health worker under this organization"
-     })
- }
+ // const findcompany = await hospital.findOne({
+ //   oragnizationName : oragnizationName,
+ // });
+ //const companyconfirm = findcompany.all_workers_id.filter(
+ //  (id) => id === healthWorkerId
+ //);
+ //if (!companyconfirm){
+ //    return res.status(StatusCodes.BAD_REQUEST).json({
+ //       msg:"Kindly contact your Health Institution so you can be added as a health worker under this organization"
+ //    })
+ //}
 
   const userCreated = await healthworker.create(req.body);
   if (!userCreated) {
@@ -54,10 +54,10 @@ export const registerHealthworkeraccount = Trycatch(async (req, res, next) => {
       msg: "Could not create please try again",
     });
   }
-  if (companyconfirm){
-      userCreated.isVerifiedByOrganization = true
-      userCreated.save()
-  }
+ // if (companyconfirm){
+ //     userCreated.isVerifiedByOrganization = true
+ //     userCreated.save()
+ // }
   const OTP = await userCreated.createActivationToken();
   const hashotp = await userCreated.HashOtp(OTP.activationcode);
   const createOTP = await storeOTP.create({

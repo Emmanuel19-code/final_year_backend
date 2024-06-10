@@ -42,6 +42,16 @@ const healthworker = new mongoose.Schema(
     oragnizationName:{
         type:String,
         required:true
+    },
+    startTime:{
+      type:Date,
+      required:true,
+      default:Date.now()
+    },
+    endTime:{
+      type:Date,
+      required:true,
+      default:Date.now()
     }
   },
   { timestamps: true }
