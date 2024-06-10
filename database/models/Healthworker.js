@@ -52,6 +52,9 @@ const healthworker = new mongoose.Schema(
       type:Date,
       required:true,
       default:Date.now()
+    },
+    specialty:{
+      type:String
     }
   },
   { timestamps: true }

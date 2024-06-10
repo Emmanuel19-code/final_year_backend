@@ -5,4 +5,4 @@ import { getAllHealthworkers } from "../HealthworkerController/getHealthworkers.
 const router = express.Router();
 
 router.post("/registerhealthworker", registerHealthworkeraccount);
-router.get("/healthworker",getAllHealthworkers)
+router.post("/healthworker",getAllHealthworkers)
