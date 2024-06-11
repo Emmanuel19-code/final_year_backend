@@ -10,6 +10,7 @@ import {
 } from "./Usercontroller/googlgeAuthController.js";
 import { connection } from "./database/connection.js";
 import appointmentRoute from "./routers/appointment.js"
+import healthworkerRoute from "./routers/Healthworker.js"
 
 const app = express();
 
@@ -26,7 +27,7 @@ app.get("/auth/google/callback", googleAuthCallback, googleAuthCallbackHandler);
 
 app.use("/user", userRoute);
 app.use("/appointment",appointmentRoute)
-
+app.use("/consultant",healthworkerRoute)
 
 app.listen(5000, () => {
   console.log("server is running 🚀🚀");
