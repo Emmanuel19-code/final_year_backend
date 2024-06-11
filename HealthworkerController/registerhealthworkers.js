@@ -1,4 +1,3 @@
-import { Trycatch } from "../middlewares/trycatch.js";
 import healthworker from "../database/models/Healthworker.js";
 import storeOTP from "../models/OtpSchema.js";
 import { checkPassword } from "../utils/Checkpassword.js";
@@ -8,7 +7,7 @@ import { emailValidation } from "../utils/emailvalidator.js";
 import { sendOneTimePassword } from "../utils/MailNotification.js";
 import hospital from "../database/models/Hospital.js";
 
-export const registerHealthworkeraccount = Trycatch(async (req, res, next) => {
+export const registerHealthworkeraccount =async (req, res, next) => {
   const { name, email, password, healthWorkerId, oragnizationName } = req.body;
   if (!name || !email || !password || !healthWorkerId || !companyId) {
     return res.status(StatusCodes.BAD_REQUEST).json({
@@ -76,4 +75,4 @@ export const registerHealthworkeraccount = Trycatch(async (req, res, next) => {
     msg: "User created",
     otp: OTP.activationcode,
   });
-});
+};
