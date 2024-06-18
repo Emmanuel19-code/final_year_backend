@@ -1,5 +1,5 @@
-import healthworker from "../database/models/Healthworker.js";
-import storeOTP from "../models/OtpSchema.js";
+import health_worker from "../database/models/Healthworker.js";
+import storeOTP from "../database/models/Otp.js";
 import { checkPassword } from "../utils/Checkpassword.js";
 import { storeactivatetoken } from "../utils/cookieExpiration.js";
 import { StatusCodes } from "http-status-codes";
@@ -7,7 +7,7 @@ import { emailValidation } from "../utils/emailvalidator.js";
 import { sendOneTimePassword } from "../utils/MailNotification.js";
 import hospital from "../database/models/Hospital.js";
 
-export const registerHealthworkeraccount =async (req, res, next) => {
+export const registerHealthworkeraccount =async (req, res) => {
   const { name, email, password, healthWorkerId, oragnizationName } = req.body;
   if (!name || !email || !password || !healthWorkerId || !companyId) {
     return res.status(StatusCodes.BAD_REQUEST).json({
@@ -29,7 +29,7 @@ export const registerHealthworkeraccount =async (req, res, next) => {
       msg4: "Passowrd must have the following characters (?=.*[@$!%*#?&])",
     });
   }
-  const isEmail = await healthworker.findOne({ email });
+  const isEmail = await health_worker.findOne({ email });
   if (isEmail) {
     return res.status(StatusCodes.BAD_REQUEST).json({
       msg: "A user with this email exist",
@@ -47,7 +47,7 @@ export const registerHealthworkeraccount =async (req, res, next) => {
      })
  }
 
-  const userCreated = await healthworker.create(req.body);
+  const userCreated = await health_worker.create(req.body);
   if (!userCreated) {
     return res.status(StatusCodes.BAD_REQUEST).json({
       msg: "Could not create please try again",

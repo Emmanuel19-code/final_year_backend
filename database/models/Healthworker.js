@@ -131,6 +131,6 @@ healthworker.methods.comparePassword = async function (canditatePassword) {
   return isMatch;
 };
 
-const healthworker = mongoose.model("user", healthworker);
+const health_worker = mongoose.model("HealthStaff", healthworker);
 
-export default healthworker;
+export default health_worker;
