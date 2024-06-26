@@ -1,4 +1,13 @@
 
 
-GET http://localhost:5000/appointment/received-appointment?doctorid=d004
+//GET http://localhost:5000/appointment/received-appointment?doctorid=d004
+//Content-Length: application/json
+
+
+POST https://final-year-backend-35ph.onrender.com/api/v1/user/register
+Content-Type: application/json
 Content-Length: application/json
+
+{
+    "name":"Emmauel Adane"
+}

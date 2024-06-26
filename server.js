@@ -25,9 +25,9 @@ app.get("/", (req, res) => {
 app.get("/auth/google", googleAuth);
 app.get("/auth/google/callback", googleAuthCallback, googleAuthCallbackHandler);
 
-app.use("api/v1/user", userRoute);
-app.use("api/v1/appointment",appointmentRoute)
-app.use("api/v1/consultant",healthworkerRoute)
+app.use("/api/v1/user", userRoute);
+app.use("/api/v1/appointment",appointmentRoute)
+app.use("/api/v1/consultant",healthworkerRoute)
 
 app.listen(5000, () => {
   console.log("server is running 🚀🚀");

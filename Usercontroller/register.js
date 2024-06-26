@@ -7,7 +7,7 @@ import { emailValidation } from "../utils/emailvalidator.js";
 import { sendOneTimePassword } from "../utils/MailNotification.js";
 
 
-export const registeraccount = async (req, res, ) => {
+export const registeraccount = async (req, res) => {
   const { name, email, password ,phone } = req.body;
   if (!name || !email || !password || phone) {
     return res.status(StatusCodes.BAD_REQUEST).json({
