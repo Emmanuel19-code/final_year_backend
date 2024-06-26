@@ -7,9 +7,9 @@ import { emailValidation } from "../utils/emailvalidator.js";
 import { sendOneTimePassword } from "../utils/MailNotification.js";
 
 
-export const registeraccount = async (req, res, next) => {
-  const { name, email, password, username } = req.body;
-  if (!name || !email || !password || !username) {
+export const registeraccount = async (req, res, ) => {
+  const { name, email, password ,phone } = req.body;
+  if (!name || !email || !password || phone) {
     return res.status(StatusCodes.BAD_REQUEST).json({
       msg: "Please Provide the missing detail",
     });
@@ -29,14 +29,7 @@ export const registeraccount = async (req, res, next) => {
       msg4: "Passowrd must have the following characters (?=.*[@$!%*#?&])",
     });
   }
-  const isUsername = await user.findOne({ username });
   const isEmail = await user.findOne({ email });
-  if (isUsername) {
-    //return res.status(StatusCodes.BAD_REQUEST).json({
-    //  msg: "A user with this username exist",
-    //});
-    return next(new ErrorHandler("A user with this username exist", 400));
-  }
   if (isEmail) {
     return res.status(StatusCodes.BAD_REQUEST).json({
       msg: "A user with this email exist",
@@ -53,7 +46,7 @@ export const registeraccount = async (req, res, next) => {
   const hashotp = await userCreated.HashOtp(OTP.activationcode);
   const createOTP = await storeOTP.create({
     owner: userCreated.uniqueId,
-    otpvalue: hashotp.HashedOtp,
+    otpvalue: hashotp
   });
   sendOneTimePassword({
     name: userCreated.name,
@@ -62,7 +55,6 @@ export const registeraccount = async (req, res, next) => {
   });
   const activationtoken = OTP.activationtoken;
   storeactivatetoken({ res, activationtoken });
-  console.log("user controller activationtoken", activationtoken);
   res.status(StatusCodes.CREATED).json({
     msg: "User created",
     otp: OTP.activationcode,

@@ -6,13 +6,13 @@ import { StatusCodes } from "http-status-codes";
 
 
 export const login =async (req, res) => {
-  const { username, password } = req.body;
-  if (!username || !password) {
+  const { email, password } = req.body;
+  if (!email || !password) {
     return res.status(StatusCodes.BAD_REQUEST).json({
       msg: "Please provide the information",
     });
   }
-  const isUser = await user.findOne({ username });
+  const isUser = await user.findOne({ email:email });
   if (!isUser) {
     return res.status(StatusCodes.BAD_REQUEST).json({
       msg: "User is not found",
@@ -35,7 +35,6 @@ export const login =async (req, res) => {
   res.status(StatusCodes.OK).json({
     message: "Authentication Successful",
     userInfo: {
-      username,
       uniqueId: isUser.uniqueId,
       profilePicture: isUser.profilePicture,
     },

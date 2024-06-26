@@ -13,9 +13,6 @@ const userSchema = new mongoose.Schema(
       type: String,
       default: userId,
     },
-    username: {
-      type: String,
-    },
     name: {
       type: String,
     },
@@ -39,14 +36,10 @@ const userSchema = new mongoose.Schema(
       type: Boolean,
       default: false,
     },
-    accountid: {
-      type: String,
-    },
-    courses: [
-      {
-        courseId: String,
-      },
-    ],
+    phone:{
+      type:String,
+      required:true
+    }
   },
   { timestamps: true }
 );
@@ -59,7 +52,7 @@ userSchema.pre("save", async function () {
 
 userSchema.methods.createToken = function () {
   return jwt.sign(
-    { uniqueId: this.uniqueId, username: this.username },
+    { uniqueId: this.uniqueId, name: this.name },
     process.env.TOKEN_SECRET,
     {
       expiresIn: "30m",
@@ -70,7 +63,7 @@ userSchema.methods.createToken = function () {
 //creating a accesstoken
 userSchema.methods.createAccessToken = function () {
   return jwt.sign(
-    { uniqueId: this.uniqueId, username: this.username, role: this.role },
+    { uniqueId: this.uniqueId, name: this.name, role: this.role },
     process.env.ACCESS_TOKEN,
     {
       expiresIn: process.env.ACCESS_TOKEN_EXPIRY,
@@ -81,7 +74,7 @@ userSchema.methods.createAccessToken = function () {
 //creating refreshtoken
 userSchema.methods.createRefreshToken = function () {
   return jwt.sign(
-    { uniqueId: this.uniqueId, username: this.username, role: this.role },
+    { uniqueId: this.uniqueId, name: this.name, role: this.role },
     process.env.REFRESH_TOKEN,
     {
       expiresIn: process.env.REFRESH_TOKEN_EXPIRY,
