@@ -9,9 +9,6 @@ const healthworker = new mongoose.Schema(
     googleId:{
       type:String
     },
-    oraginzationId:{
-      type:String
-    },
     name: {
       type: String,
     },
@@ -38,10 +35,6 @@ const healthworker = new mongoose.Schema(
     isVerifiedByOrganization:{
         type:Boolean,
         default:false
-    },
-    oragnizationName:{
-        type:String,
-        required:true
     },
     startTime:{
       type:Date,

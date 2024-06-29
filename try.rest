@@ -4,10 +4,30 @@
 //Content-Length: application/json
 
 
-POST https://final-year-backend-35ph.onrender.com/api/v1/user/register
+//POST https://final-year-backend-35ph.onrender.com/api/v1/user/register
+//Content-Type: application/json
+//Content-Length: application/json
+
+//{
+//    "name":"Emmauel Adane"
+//}
+
+//POST http://localhost:5000/api/v1/consultant/registerhealthworker
+//Content-Type: application/json
+//
+//{
+//    "name":"",
+//    "email":"",
+//    "password":"",
+//    "healthWorkerId":""
+//}
+
+POST http://localhost:5000/api/v1/user/register
 Content-Type: application/json
-Content-Length: application/json
 
 {
-    "name":"Emmauel Adane"
+    "name":"", 
+    "email":"",
+    "password":"" ,
+    "phone":""
 }

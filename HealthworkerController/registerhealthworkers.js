@@ -5,13 +5,17 @@ import { storeactivatetoken } from "../utils/cookieExpiration.js";
 import { StatusCodes } from "http-status-codes";
 import { emailValidation } from "../utils/emailvalidator.js";
 import { sendOneTimePassword } from "../utils/MailNotification.js";
-import hospital from "../database/models/Hospital.js";
+import all_workers from "../database/models/AllworkersId.js";
 
-export const registerHealthworkeraccount =async (req, res) => {
-  const { name, email, password, healthWorkerId, oragnizationName } = req.body;
-  if (!name || !email || !password || !healthWorkerId || !companyId) {
+export const registerHealthworkeraccount = async (req, res) => {
+  const { name, email, password, healthWorkerId } = req.body;
+  console.log(req.body);
+  console.log(name);
+
+  if (!name || !email || !password || !healthWorkerId) {
+    console.log(name, email, password, healthWorkerId);
     return res.status(StatusCodes.BAD_REQUEST).json({
-      msg: "Please Provide the missing detail",
+      msg: "Please provide the missing details",
     });
   }
   const valid = emailValidation(email);
@@ -35,28 +39,24 @@ export const registerHealthworkeraccount =async (req, res) => {
       msg: "A user with this email exist",
     });
   }
-  const findcompany = await hospital.findOne({
-    oragnizationName : oragnizationName,
-  });
- const companyconfirm = findcompany.all_workers_id.filter(
-   (id) => id === healthWorkerId
- );
- if (!companyconfirm){
-     return res.status(StatusCodes.BAD_REQUEST).json({
-        msg:"Kindly contact your Health Institution so you can be added as a health worker under this organization"
-     })
- }
 
-  const userCreated = await health_worker.create(req.body);
+  const allWorkersData = await all_workers.findOne();
+
+  const confirmId = allWorkersData?.hospital_health_workers.some(
+    (item) => item.healthWorkerId === healthWorkerId
+  );
+  if (!confirmId) {
+    return res.status(400).json({
+      msg: "Couldn't find your find Contact your administrator to solve this error",
+    });
+  }
+  let userCreated = await health_worker.create(req.body);
   if (!userCreated) {
     return res.status(StatusCodes.BAD_REQUEST).json({
       msg: "Could not create please try again",
     });
   }
-  if (companyconfirm){
-      userCreated.isVerifiedByOrganization = true
-      userCreated.save()
-  }
+
   const OTP = await userCreated.createActivationToken();
   const hashotp = await userCreated.HashOtp(OTP.activationcode);
   const createOTP = await storeOTP.create({

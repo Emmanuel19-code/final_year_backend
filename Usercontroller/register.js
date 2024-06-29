@@ -9,7 +9,8 @@ import { sendOneTimePassword } from "../utils/MailNotification.js";
 
 export const registeraccount = async (req, res) => {
   const { name, email, password ,phone } = req.body;
-  if (!name || !email || !password || phone) {
+  if (!name || !email || !password || !phone) {
+    console.log(name,email,password,phone);
     return res.status(StatusCodes.BAD_REQUEST).json({
       msg: "Please Provide the missing detail",
     });
