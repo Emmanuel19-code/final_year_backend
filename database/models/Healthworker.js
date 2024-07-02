@@ -17,6 +17,9 @@ const healthworker = new mongoose.Schema(
       required: [true, "please provide this value"],
       unique: true,
     },
+    phone:{
+      type:String
+    },
     password: {
       type: String,
     },

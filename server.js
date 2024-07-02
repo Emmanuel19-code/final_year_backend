@@ -3,14 +3,11 @@ import userRoute from "./routers/User.js";
 import cors from "cors";
 import cookieParser from "cookie-parser";
 import {} from "dotenv/config";
-import {
-  googleAuth,
-  googleAuthCallback,
-  googleAuthCallbackHandler,
-} from "./Usercontroller/googlgeAuthController.js";
 import { connection } from "./database/connection.js";
 import appointmentRoute from "./routers/appointment.js"
 import healthworkerRoute from "./routers/Healthworker.js"
+import conversationRoute from "./routers/conversation.js"
+import messageRoute from "./routers/message.js"
 
 const app = express();
 
@@ -22,12 +19,13 @@ app.get("/", (req, res) => {
   res.status(200).send(`<h1>Starting your project</h1>`);
 });
 
-app.get("/auth/google", googleAuth);
-app.get("/auth/google/callback", googleAuthCallback, googleAuthCallbackHandler);
+
 
 app.use("/api/v1/user", userRoute);
 app.use("/api/v1/appointment",appointmentRoute)
 app.use("/api/v1/consultant",healthworkerRoute)
+app.use("/api/v1/chat",conversationRoute)
+app.use("/api/v1/message",messageRoute)
 
 app.listen(5000, () => {
   console.log("server is running 🚀🚀");

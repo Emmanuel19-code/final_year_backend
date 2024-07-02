@@ -8,56 +8,64 @@ import { sendOneTimePassword } from "../utils/MailNotification.js";
 
 
 export const registeraccount = async (req, res) => {
-  const { name, email, password ,phone } = req.body;
-  if (!name || !email || !password || !phone) {
-    console.log(name,email,password,phone);
-    return res.status(StatusCodes.BAD_REQUEST).json({
-      msg: "Please Provide the missing detail",
-    });
-  }
-  const valid = emailValidation(email);
-  if (!valid) {
-    return res.status(StatusCodes.BAD_REQUEST).json({
-      msg: "Please provide a valid email",
-    });
-  }
-  const check = checkPassword(password);
-  if (!check) {
-    return res.status(StatusCodes.BAD_REQUEST).json({
-      msg1: "Password must have atleasts an uppercase letter",
-      msg2: "Passord must have at least a lowercase letter",
-      msg3: "Password must be a minimum of 8 characters",
-      msg4: "Passowrd must have the following characters (?=.*[@$!%*#?&])",
-    });
-  }
-  const isEmail = await user.findOne({ email });
-  if (isEmail) {
-    return res.status(StatusCodes.BAD_REQUEST).json({
-      msg: "A user with this email exist",
-    });
-  }
-  const userCreated = await user.create(req.body);
-  if (!userCreated) {
-    return res.status(StatusCodes.BAD_REQUEST).json({
-      msg: "Could not create please try again",
-    });
+  try {
+      const { name, email, password, phone } = req.body;
+      if (!name || !email || !password || !phone) {
+        console.log(name, email, password, phone);
+        return res.status(StatusCodes.BAD_REQUEST).json({
+          msg: "Please Provide the missing detail",
+        });
+      }
+      const valid = emailValidation(email);
+      if (!valid) {
+        return res.status(StatusCodes.BAD_REQUEST).json({
+          msg: "Please provide a valid email",
+        });
+      }
+      const check = checkPassword(password);
+      if (!check) {
+        return res.status(StatusCodes.BAD_REQUEST).json({
+          msg1: "Password must have atleasts an uppercase letter",
+          msg2: "Passord must have at least a lowercase letter",
+          msg3: "Password must be a minimum of 8 characters",
+          msg4: "Passowrd must have the following characters (?=.*[@$!%*#?&])",
+        });
+      }
+      const isEmail = await user.findOne({ email });
+      if (isEmail) {
+        return res.status(StatusCodes.BAD_REQUEST).json({
+          msg: "A user with this email exist",
+        });
+      }
+      const userCreated = await user.create(req.body);
+      if (!userCreated) {
+        return res.status(StatusCodes.BAD_REQUEST).json({
+          msg: "Could not create please try again",
+        });
+      }
+
+      const OTP = await userCreated.createActivationToken();
+      const hashotp = await userCreated.HashOtp(OTP.activationcode);
+      const createOTP = await storeOTP.create({
+        owner: userCreated.uniqueId,
+        otpvalue: hashotp,
+      });
+      console.log(createOTP);
+      sendOneTimePassword({
+        name: userCreated.name,
+        email: userCreated.email,
+        verificationToken: OTP.activationcode,
+      });
+      const activationtoken = OTP.activationtoken;
+      storeactivatetoken({ res, activationtoken });
+      res.status(StatusCodes.CREATED).json({
+        msg: "User created",
+        otp: OTP.activationcode,
+      });
+  } catch (error) {
+    return res.status(400).json({
+      msg:"An error occured while creating the account"
+    })
   }
 
-  const OTP = await userCreated.createActivationToken();
-  const hashotp = await userCreated.HashOtp(OTP.activationcode);
-  const createOTP = await storeOTP.create({
-    owner: userCreated.uniqueId,
-    otpvalue: hashotp
-  });
-  sendOneTimePassword({
-    name: userCreated.name,
-    email: userCreated.email,
-    verificationToken: OTP.activationcode,
-  });
-  const activationtoken = OTP.activationtoken;
-  storeactivatetoken({ res, activationtoken });
-  res.status(StatusCodes.CREATED).json({
-    msg: "User created",
-    otp: OTP.activationcode,
-  });
 };

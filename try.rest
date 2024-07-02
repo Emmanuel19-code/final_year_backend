@@ -7,9 +7,12 @@
 //POST https://final-year-backend-35ph.onrender.com/api/v1/user/register
 //Content-Type: application/json
 //Content-Length: application/json
-
+//
 //{
-//    "name":"Emmauel Adane"
+//    "name":"Emmauel Adane",
+//    "email":"a",
+//    "password":"a",
+//    "phone":"a"
 //}
 
 //POST http://localhost:5000/api/v1/consultant/registerhealthworker
@@ -26,8 +29,11 @@ POST http://localhost:5000/api/v1/user/register
 Content-Type: application/json
 
 {
-    "name":"", 
-    "email":"",
-    "password":"" ,
-    "phone":""
+    "name":"Emmanuel Adane Bosea", 
+    "email":"emmanueladane52@gmail.com",
+    "password":"B125@sah" ,
+    "phone":"0546506783"
 }
+
+//getting the data of users in a conversation 
+//GET http://localhost:5000/api/v1/chat/get_conversation:12345

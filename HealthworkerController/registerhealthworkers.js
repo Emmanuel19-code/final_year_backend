@@ -8,11 +8,11 @@ import { sendOneTimePassword } from "../utils/MailNotification.js";
 import all_workers from "../database/models/AllworkersId.js";
 
 export const registerHealthworkeraccount = async (req, res) => {
-  const { name, email, password, healthWorkerId } = req.body;
+  const { name, email, password, healthWorkerId,phone } = req.body;
   console.log(req.body);
   console.log(name);
 
-  if (!name || !email || !password || !healthWorkerId) {
+  if (!name || !email || !password || !healthWorkerId || !phone) {
     console.log(name, email, password, healthWorkerId);
     return res.status(StatusCodes.BAD_REQUEST).json({
       msg: "Please provide the missing details",

@@ -6,9 +6,6 @@ import { v4 as uuidv4 } from "uuid";
 const userId = uuidv4().split("-")[0];
 const userSchema = new mongoose.Schema(
   {
-    googleId:{
-      type:String
-    },
     uniqueId: {
       type: String,
       default: userId,
@@ -50,15 +47,15 @@ userSchema.pre("save", async function () {
   this.password = await bcrypt.hash(this.password, salt);
 });
 
-userSchema.methods.createToken = function () {
-  return jwt.sign(
-    { uniqueId: this.uniqueId, name: this.name },
-    process.env.TOKEN_SECRET,
-    {
-      expiresIn: "30m",
-    }
-  );
-};
+//userSchema.methods.createToken = function () {
+//  return jwt.sign(
+//    { uniqueId: this.uniqueId, name: this.name },
+//    process.env.TOKEN_SECRET,
+//    {
+//      expiresIn: "30m",
+//    }
+//  );
+//};
 
 //creating a accesstoken
 userSchema.methods.createAccessToken = function () {
@@ -106,7 +103,7 @@ userSchema.methods.HashOtp = async function (otpvalue) {
       expiresIn: "10m",
     }
   );
-  return { HashedOtp };
+  return  HashedOtp ;
 };
 
 //comparing the function
