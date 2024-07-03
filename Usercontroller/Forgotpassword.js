@@ -1,12 +1,7 @@
-import { Trycatch } from "../middlewares/trycatch.js";
-import user from "../models/usermodel.js";
-import {
-  storeactivatetoken,
-} from "../utils/cookieExpiration.js";
+import user from "../database/models/user.js";
 import { StatusCodes } from "http-status-codes";
 
-
-export const ForgotPassword = Trycatch(async (req, res) => {
+export const ForgotPassword = async (req, res) => {
   const { userInfo } = req.body;
   if (!userInfo) {
     return res.status(StatusCodes.BAD_REQUEST).json({
@@ -19,10 +14,9 @@ export const ForgotPassword = Trycatch(async (req, res) => {
       msg: "User not found",
     });
   }
-  const token = isUser.createActivationToken();
-  const activationtoken = token.activationtoken;
-  storeactivatetoken({ res, activationtoken });
+  let token = await isUser.createToken();
   res.status(StatusCodes.OK).json({
     msg: "ohk",
+    token: token,
   });
-});
+};

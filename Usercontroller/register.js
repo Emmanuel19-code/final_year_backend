@@ -1,7 +1,6 @@
 import user from "../database/models/user.js";
 import storeOTP from "../database/models/Otp.js";
 import { checkPassword } from "../utils/Checkpassword.js";
-import { storeactivatetoken } from "../utils/cookieExpiration.js";
 import { StatusCodes } from "http-status-codes";
 import { emailValidation } from "../utils/emailvalidator.js";
 import { sendOneTimePassword } from "../utils/MailNotification.js";
@@ -50,17 +49,16 @@ export const registeraccount = async (req, res) => {
         owner: userCreated.uniqueId,
         otpvalue: hashotp,
       });
-      console.log(createOTP);
-      sendOneTimePassword({
-        name: userCreated.name,
-        email: userCreated.email,
-        verificationToken: OTP.activationcode,
-      });
-      const activationtoken = OTP.activationtoken;
-      storeactivatetoken({ res, activationtoken });
+      //sendOneTimePassword({
+      //  name: userCreated.name,
+      //  email: userCreated.email,
+      //  verificationToken: OTP.activationcode,
+      //});
+      let token = await userCreated.createToken()
       res.status(StatusCodes.CREATED).json({
         msg: "User created",
         otp: OTP.activationcode,
+        token: token
       });
   } catch (error) {
     return res.status(400).json({

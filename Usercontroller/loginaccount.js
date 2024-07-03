@@ -1,7 +1,4 @@
 import user from "../database/models/user.js";
-import {
-  createcookies,
-} from "../utils/cookieExpiration.js";
 import { StatusCodes } from "http-status-codes";
 
 
@@ -31,12 +28,14 @@ export const login =async (req, res) => {
   }
   const accesstoken = isUser.createAccessToken();
   const refreshtoken = isUser.createRefreshToken();
-  createcookies({ res, accesstoken, refreshtoken });
+ // createcookies({ res, accesstoken, refreshtoken });
   res.status(StatusCodes.OK).json({
     message: "Authentication Successful",
     userInfo: {
       uniqueId: isUser.uniqueId,
       profilePicture: isUser.profilePicture,
+      accesstoken:accesstoken,
+      refreshtoken:refreshtoken
     },
   });
 };

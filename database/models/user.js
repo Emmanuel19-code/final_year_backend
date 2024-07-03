@@ -47,15 +47,15 @@ userSchema.pre("save", async function () {
   this.password = await bcrypt.hash(this.password, salt);
 });
 
-//userSchema.methods.createToken = function () {
-//  return jwt.sign(
-//    { uniqueId: this.uniqueId, name: this.name },
-//    process.env.TOKEN_SECRET,
-//    {
-//      expiresIn: "30m",
-//    }
-//  );
-//};
+userSchema.methods.createToken = function () {
+  return jwt.sign(
+    { uniqueId: this.uniqueId, name: this.name, role: this.role },
+    process.env.TOKEN_SECRET,
+    {
+      expiresIn: "30m",
+    }
+  );
+};
 
 //creating a accesstoken
 userSchema.methods.createAccessToken = function () {

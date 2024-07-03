@@ -1,11 +1,10 @@
-import user from "../database/models/user.js";
 import storeOTP from "../database/models/Otp.js";
 import { StatusCodes } from "http-status-codes";
 import jwt from "jsonwebtoken";
+import health_worker from "../database/models/Healthworker.js";
 
 export const activateAccount = async (req, res) => {
   const { activationcode } = req.body;
-  console.log(activationcode);
   const userId = req.user.uniqueId;
   if (!userId) {
     return res.status(StatusCodes.BAD_REQUEST).json({
@@ -29,11 +28,11 @@ export const activateAccount = async (req, res) => {
       msg: "please provide the right OTP value",
     });
   }
-  const unverifieduser = await user.findOne({ uniqueId: userId });
+  const unverifieduser = await health_worker.findOne({ uniqueId: userId });
   unverifieduser.isverified = true;
   unverifieduser.save();
   const delotp = await storeOTP.deleteOne({ owner: userId });
-  res.clearCookie("authcookie");
+  //res.clearCookie("authcookie");
   res.status(StatusCodes.OK).json({
     msg: "You have been verified successfully",
   });

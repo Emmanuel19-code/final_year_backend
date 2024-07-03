@@ -1,13 +1,12 @@
 import mongoose from "mongoose";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
-import { v4 as uuidv4 } from "uuid";
 
-//const userId = uuidv4().split("-")[0];
+
 const healthworker = new mongoose.Schema(
   {
-    googleId:{
-      type:String
+    healthworkerId:{
+        type:String,
     },
     name: {
       type: String,
@@ -64,7 +63,7 @@ healthworker.pre("save", async function () {
 
 healthworker.methods.createToken = function () {
   return jwt.sign(
-    { uniqueId: this.uniqueId, username: this.username },
+    { healthworkerId: this.healthworkerId },
     process.env.TOKEN_SECRET,
     {
       expiresIn: "30m",
@@ -75,7 +74,7 @@ healthworker.methods.createToken = function () {
 //creating a accesstoken
 healthworker.methods.createAccessToken = function () {
   return jwt.sign(
-    { uniqueId: this.uniqueId, username: this.username, role: this.role },
+    { healthworkerId: this.healthworkerId, role: this.role },
     process.env.ACCESS_TOKEN,
     {
       expiresIn: process.env.ACCESS_TOKEN_EXPIRY,
@@ -86,7 +85,7 @@ healthworker.methods.createAccessToken = function () {
 //creating refreshtoken
 healthworker.methods.createRefreshToken = function () {
   return jwt.sign(
-    { uniqueId: this.uniqueId, username: this.username, role: this.role },
+    { healthworkerId: this.healthworkerId,  role: this.role },
     process.env.REFRESH_TOKEN,
     {
       expiresIn: process.env.REFRESH_TOKEN_EXPIRY,
@@ -98,7 +97,7 @@ healthworker.methods.createActivationToken = function () {
   const activationcode = Math.floor(1000 + Math.random() * 9000).toString();
   const activationtoken = jwt.sign(
     {
-      uniqueId: this.uniqueId,
+      healthworkerId: this.healthworkerId,
     },
     process.env.ACTIVATION_TOKEN,
     {

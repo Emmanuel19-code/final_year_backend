@@ -8,6 +8,7 @@ import appointmentRoute from "./routers/appointment.js"
 import healthworkerRoute from "./routers/Healthworker.js"
 import conversationRoute from "./routers/conversation.js"
 import messageRoute from "./routers/message.js"
+import hospitalRoute from "./routers/hospital.js"
 
 const app = express();
 
@@ -26,6 +27,7 @@ app.use("/api/v1/appointment",appointmentRoute)
 app.use("/api/v1/consultant",healthworkerRoute)
 app.use("/api/v1/chat",conversationRoute)
 app.use("/api/v1/message",messageRoute)
+app.use("/api/v1/hospital",hospitalRoute)
 
 app.listen(5000, () => {
   console.log("server is running 🚀🚀");

@@ -10,10 +10,7 @@ import all_workers from "../database/models/AllworkersId.js";
 export const registerHealthworkeraccount = async (req, res) => {
   const { name, email, password, healthWorkerId,phone } = req.body;
   console.log(req.body);
-  console.log(name);
-
   if (!name || !email || !password || !healthWorkerId || !phone) {
-    console.log(name, email, password, healthWorkerId);
     return res.status(StatusCodes.BAD_REQUEST).json({
       msg: "Please provide the missing details",
     });
@@ -39,15 +36,13 @@ export const registerHealthworkeraccount = async (req, res) => {
       msg: "A user with this email exist",
     });
   }
-
-  const allWorkersData = await all_workers.findOne();
-
-  const confirmId = allWorkersData?.hospital_health_workers.some(
-    (item) => item.healthWorkerId === healthWorkerId
-  );
+  const confirmId = await all_workers.findOne({
+     healthWorkerId:healthWorkerId
+  })
+  console.log(confirmId);
   if (!confirmId) {
     return res.status(400).json({
-      msg: "Couldn't find your find Contact your administrator to solve this error",
+      msg: "Couldn't find your find Contact your administrator to solve this problem",
     });
   }
   let userCreated = await health_worker.create(req.body);
@@ -63,16 +58,18 @@ export const registerHealthworkeraccount = async (req, res) => {
     owner: userCreated.uniqueId,
     otpvalue: hashotp.HashedOtp,
   });
-  sendOneTimePassword({
-    name: userCreated.name,
-    email: userCreated.email,
-    verificationToken: OTP.activationcode,
-  });
-  const activationtoken = OTP.activationtoken;
-  storeactivatetoken({ res, activationtoken });
-  console.log("user controller activationtoken", activationtoken);
+  //sendOneTimePassword({
+  //  name: userCreated.name,
+  //  email: userCreated.email,
+  //  verificationToken: OTP.activationcode,
+  //});
+  //const activationtoken = OTP.activationtoken;
+  //storeactivatetoken({ res, activationtoken });
+  //console.log("user controller activationtoken", activationtoken);
+  let token = await userCreated.createToken();
   res.status(StatusCodes.CREATED).json({
     msg: "User created",
     otp: OTP.activationcode,
+    token: token,
   });
 };

@@ -1,3 +1,3 @@
 .env
 /node_modules
-try.rest
+/rest_request

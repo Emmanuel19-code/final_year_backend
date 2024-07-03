@@ -8,5 +8,6 @@ const router = express.Router();
 router.post("/registerhealthworker", registerHealthworkeraccount);
 router.post("/healthworker",getAllHealthworkers)
 router.post("/login",SignHealthworkder)
+router.post("/verify",)
 
 export default router

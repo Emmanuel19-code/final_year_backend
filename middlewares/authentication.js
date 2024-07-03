@@ -1,19 +1,91 @@
-import jwt from "jsonwebtoken"
+import jwt from "jsonwebtoken";
+import { StatusCodes } from "http-status-codes";
 
-const Authenticate = (req,res,next) =>{
-  const token = req.headers.Authorization
-  if(!token){
-    return res.status(400).json({
-        msg:"please provide an authentication token"
+//export const Authentication = async (req, res, next) => {
+//  const { accessToken, refreshToken } = req.signedCookies;
+//  try {
+//    if (!accessToken || !refreshToken) {
+//      return res.json({
+//        msg: "Please Login into your account",
+//      });
+//    }
+//    const payload = jwt.verify(accessToken, process.env.ACCESS_TOKEN);
+//    req.user = {
+//      uniqueId: payload.uniqueId,
+//      username: payload.username,
+//      role: payload.role,
+//    };
+//    next();
+//  } catch (error) {
+//    return res.status(StatusCodes.BAD_REQUEST).json({
+//      msg: "An error occured while authenticating",
+//    });
+//  }
+//};
+//
+//export const authorizePermision = (...roles) => {
+//  return (req, res, next) => {
+//    if (!roles.includes(req.user.role)) {
+//      return res.status(StatusCodes.BAD_REQUEST).json({
+//        msg: "You do not have permission to perform this action",
+//      });
+//    }
+//    next();
+//  };
+//};
+
+export const verifyuser = async (req, res, next) => {
+  try {
+      const authToken = req.headers.authorization;
+      if (!authToken || !authToken.startsWith("Bearer")) {
+        return res.status(400).json({
+          msg: "Please Sign In ",
+        });
+      }
+      const token = authToken.split(" ")[1];
+      console.log(token);
+     const payload = jwt.verify(token, process.env.TOKEN_SECRET);
+     req.user = { uniqueId: payload.uniqueId };
+     next();
+  } catch (error) {
+    res.status(400).json({
+       msg:"an error occured",
+       error:error
     })
   }
-  jwt.verify(token, process.env.TOKEN_SECRET, (err, decoded) => {
-    if (err) return res.status(401).send({
-        msg:"Please invalid token"
-    });
-    req.user = decoded;
-    next();
-  });
+ 
+};
+
+export const Verifyhealthworker = async (req,res,next)=>{
+ const authToken = req.headers.authorization;
+ if (!authToken) {
+   return res.status(StatusCodes.BAD_REQUEST).json({
+     msg: "please try creating your account again",
+   });
+ }
+ const payload = jwt.verify(token, process.env.TOKEN_SECRET);
+ req.user = { uniqueId: payload.uniqueId };
+ next();
 }
 
-export default Authenticate
+export const Authentication = async (req, res, next) => {
+ try {
+   const authToken = req.headers.authorization;
+   console.log(authToken);
+   if (!authToken || !authToken.startsWith("Bearer")) {
+     return res.status(400).json({
+       msg: "Please Sign In ",
+     });
+   }
+   const token = authToken.split(" ")[1];
+   const payload = jwt.verify(token, process.env.ACCESS_TOKEN);
+   req.user = { uniqueId: payload.uniqueId };
+   next();
+ } catch (error) {
+   res.status(400).json({
+     msg: "an error occured",
+     error: error,
+   });
+ }
+};
+

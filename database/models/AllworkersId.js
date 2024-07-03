@@ -2,11 +2,7 @@ import mongoose from "mongoose"
 
 
 const Allworker_schema = new mongoose.Schema(
-  {
-    hospital_health_workers: [
-      { name: String, role: String, healthWorkerId: String },
-    ],
-  },
+   { name: String, role: String, healthWorkerId: String },
   { timestamps: true }
 );
 
