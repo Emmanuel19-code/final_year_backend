@@ -1,13 +1,18 @@
 import express from "express";
 import { registerHealthworkeraccount } from "../HealthworkerController/registerhealthworkers.js";
 import { getAllHealthworkers } from "../HealthworkerController/getHealthworkers.js";
-import { SignHealthworkder } from "../HealthworkerController/sign_In_healthworker.js";
+import { SignHealthworker } from "../HealthworkerController/sign_In_healthworker.js";
+import { HDelete } from "../HealthworkerController/HDelete.js";
+import { ActivateAccount } from "../HealthworkerController/activateaccount.js";
+import { Verifyhealthworker } from "../middlewares/authentication.js";
 
 const router = express.Router();
 
 router.post("/registerhealthworker", registerHealthworkeraccount);
 router.post("/healthworker",getAllHealthworkers)
-router.post("/login",SignHealthworkder)
-router.post("/verify",)
+router.post("/login",SignHealthworker)
+router.post("/verify", Verifyhealthworker,ActivateAccount);
+router.delete("/deleteh",HDelete)
+
 
 export default router

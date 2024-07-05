@@ -1,16 +1,18 @@
-import { Trycatch } from "../middlewares/trycatch.js";
-import user from "../models/usermodel.js";
+import user from "../database/models/user.js";
 
-
-export const userprofile = Trycatch(async (req, res) => {
-  const userid = req.user.uniqueId;
-  if (!userid) {
-    return res.status(400).json({
-      msg: "please provide your user_id",
+export const Userprofile = async (req, res) => {
+  try {
+    const userid = req.user.uniqueId;
+    const user_profile = await user
+      .findOne({ uniqueId: userid })
+      .select("name email uniqueId");
+    return res.status(200).json({
+      data: user_profile,
     });
+  } catch (error) {
+     return res.status(400).json({
+      msg:"an error occured while fetching your data"
+     })
   }
-  const user_profile = await user.findOne({ uniqueId: userid });
-  return res.status(200).json({
-    data: user_profile,
-  });
-});
+  
+};

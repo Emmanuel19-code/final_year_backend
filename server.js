@@ -30,7 +30,19 @@ app.use("/api/v1/message",messageRoute)
 app.use("/api/v1/hospital",hospitalRoute)
 
 app.listen(5000, () => {
+  connect();
   console.log("server is running 🚀🚀");
 });
 
-connection()
+const connect =()=>{
+  try {
+    connection();
+  } catch (error) {
+    app.get("/api/error",(req,res)=>{
+       return res.status(400).json({
+        msg:"An error occured while connecting to the server"
+       })
+    })
+  }
+}
+

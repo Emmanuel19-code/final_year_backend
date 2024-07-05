@@ -5,7 +5,7 @@ export const sendOneTimePassword = async ({
   email,
   verificationToken,
 }) => {
-  return sendEmail({
+  return  await sendEmail({
     to: email,
     subject: "Email Confirmation",
     html: `<!DOCTYPE html>
@@ -13,7 +13,7 @@ export const sendOneTimePassword = async ({
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Emmanuel Academy Activation Mail</title>
+    <title>ACCOUNT VERIFICATION</title>
     <style type="text/css">
          /*base*/
          body{
@@ -74,7 +74,7 @@ export const sendOneTimePassword = async ({
 <body>
     <div class="email-wrapper">
         <div class="email-header">
-            <h1>Welcome to Emmanul Learning Hub</h1>
+            <h1>Welcome TELEHUB</h1>
         </div>
         <div class="email-body">
             <p>${name},</p>
@@ -87,7 +87,7 @@ export const sendOneTimePassword = async ({
             <p>If you did not register with our platform please ignore this mail</p>
         </div>
         <div class="email-footer">
-            <p>If you have any question please don't hesistate to contact us at <a href="mailto:">platform support</a></p>
+            <p>If you have any question please don't hesistate to contact us at <a href="mailto:emmanueladane52@gmail.com">platform support</a></p>
         </div>
     </div>
 </body>

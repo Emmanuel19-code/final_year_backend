@@ -1,14 +1,15 @@
 import health_worker from "../database/models/Healthworker.js";
 
 
-export const SignHealthworkder = async({req,res}) =>{
-   const {email,password} = req.body
-   if(!email || !password){
+export const SignHealthworker = async(req,res) =>{
+   const {email,password,healthworkerId} = req.body
+   console.log("this is called",req.body);
+   if(!email || !password || !healthworkerId){
     return res.status(400).json({
         msg:"please provide the missing information"
     })
    }
-   const is_staff = await health_worker.find({
+   const is_staff = await health_worker.findOne({
     email:email
    })
    if(!is_staff){
@@ -16,7 +17,7 @@ export const SignHealthworkder = async({req,res}) =>{
         msg:"this user is not registered as a staff"
     })
    }
-   const confirm_pass = await health_worker.comparePassword(is_staff.password)
+   const confirm_pass = await is_staff.comparePassword(password);
    if(!confirm_pass){
      return res.status(400).json({
         msg:"please make sure the provider password is correct"
@@ -24,8 +25,16 @@ export const SignHealthworkder = async({req,res}) =>{
    }
     const accesstoken = is_staff.createAccessToken();
     const refreshtoken = is_staff.createRefreshToken();
-    createcookies({ res, accesstoken, refreshtoken });
-    res.status(StatusCodes.OK).json({
-      message: "Authentication Successful",
-    });
+    //createcookies({ res, accesstoken, refreshtoken });
+     res.status(StatusCodes.OK).json({
+       message: "Authentication Successful",
+       userInfo: {
+         uniqueId: is_staff.healthworkerId,
+         profilePicture: is_staff.profilePicture,
+         accesstoken: accesstoken,
+         refreshtoken: refreshtoken,
+         name: is_staff.name,
+         email: is_staff.email,
+       },
+     });
 }

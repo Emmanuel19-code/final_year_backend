@@ -49,11 +49,11 @@ export const registeraccount = async (req, res) => {
         owner: userCreated.uniqueId,
         otpvalue: hashotp,
       });
-      //sendOneTimePassword({
-      //  name: userCreated.name,
-      //  email: userCreated.email,
-      //  verificationToken: OTP.activationcode,
-      //});
+      sendOneTimePassword({
+        name: userCreated.name,
+        email: userCreated.email,
+        verificationToken: OTP.activationcode,
+      });
       let token = await userCreated.createToken()
       res.status(StatusCodes.CREATED).json({
         msg: "User created",

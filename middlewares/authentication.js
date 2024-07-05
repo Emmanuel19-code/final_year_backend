@@ -36,56 +36,69 @@ import { StatusCodes } from "http-status-codes";
 
 export const verifyuser = async (req, res, next) => {
   try {
-      const authToken = req.headers.authorization;
-      if (!authToken || !authToken.startsWith("Bearer")) {
-        return res.status(400).json({
-          msg: "Please Sign In ",
-        });
-      }
-      const token = authToken.split(" ")[1];
-      console.log(token);
-     const payload = jwt.verify(token, process.env.TOKEN_SECRET);
-     req.user = { uniqueId: payload.uniqueId };
-     next();
+    const authToken = req.headers.authorization;
+    if (!authToken || !authToken.startsWith("Bearer")) {
+      return res.status(400).json({
+        msg: "Please Sign In ",
+      });
+    }
+    const token = authToken.split(" ")[1];
+    console.log(token);
+    const payload = jwt.verify(token, process.env.TOKEN_SECRET);
+    req.user = { uniqueId: payload.uniqueId };
+    next();
   } catch (error) {
     res.status(400).json({
-       msg:"an error occured",
-       error:error
-    })
+      msg: "an error occured",
+      error: error,
+    });
   }
- 
 };
 
-export const Verifyhealthworker = async (req,res,next)=>{
- const authToken = req.headers.authorization;
- if (!authToken) {
-   return res.status(StatusCodes.BAD_REQUEST).json({
-     msg: "please try creating your account again",
-   });
- }
- const payload = jwt.verify(token, process.env.TOKEN_SECRET);
- req.user = { uniqueId: payload.uniqueId };
- next();
-}
-
-export const Authentication = async (req, res, next) => {
- try {
-   const authToken = req.headers.authorization;
-   console.log(authToken);
-   if (!authToken || !authToken.startsWith("Bearer")) {
-     return res.status(400).json({
-       msg: "Please Sign In ",
+export const Verifyhealthworker = async (req, res, next) => {
+   try {
+     const authToken = req.headers.authorization;
+     if (!authToken || !authToken.startsWith("Bearer")) {
+       return res.status(400).json({
+         msg: "Please Sign In ",
+       });
+     }
+     const token = authToken.split(" ")[1];
+     console.log(token);
+     const payload = jwt.verify(token, process.env.TOKEN_SECRET);
+     console.log(payload);
+     req.health_Worker = { healthworkerId: payload.healthworkerId };
+     next();
+   } catch (error) {
+     res.status(400).json({
+       msg: "an error occured",
+       error: error,
      });
    }
-   const token = authToken.split(" ")[1];
-   const payload = jwt.verify(token, process.env.ACCESS_TOKEN);
-   req.user = { uniqueId: payload.uniqueId };
-   next();
- } catch (error) {
-   res.status(400).json({
-     msg: "an error occured",
-     error: error,
-   });
- }
 };
 
+export const Authentication = async (req, res, next) => {
+  try {
+    const authToken = req.headers.authorization;
+    if (!authToken || !authToken.startsWith("Bearer")) {
+      return res.status(400).json({
+        msg: "Please Sign In ",
+      });
+    }
+    const token = authToken.split(" ")[1];
+    const payload = jwt.verify(token, process.env.ACCESS_TOKEN);
+    req.user = { uniqueId: payload.uniqueId };
+    next();
+  } catch (error) {
+    if (error.message == "jwt expired") {
+      return res.status(400).json({
+        msg: "Please log into your account",
+      });
+    } else {
+      res.status(400).json({
+        msg: "an error occured",
+        error: error,
+      });
+    }
+  }
+};

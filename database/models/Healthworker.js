@@ -66,7 +66,7 @@ healthworker.methods.createToken = function () {
     { healthworkerId: this.healthworkerId },
     process.env.TOKEN_SECRET,
     {
-      expiresIn: "30m",
+      expiresIn: "10m",
     }
   );
 };
@@ -125,7 +125,6 @@ healthworker.methods.comparePassword = async function (canditatePassword) {
   const isMatch = await bcrypt.compare(canditatePassword, this.password);
   return isMatch;
 };
-
 const health_worker = mongoose.model("HealthStaff", healthworker);
 
 export default health_worker;

@@ -13,4 +13,5 @@ router.post("/cancel-appointment",Authentication ,cancelappointment)
 router.put("/update-appointment",Authentication ,appointmentReschedule)
 router.get(`/received-appointment`,Authentication ,getbookedappointment)
 
+
 export default router

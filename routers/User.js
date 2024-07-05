@@ -5,6 +5,9 @@ import { updateUserInfo } from "../Usercontroller/updateaccountdetails.js";
 import { verifyuser, Authentication } from "../middlewares/authentication.js";
 import { activateAccount } from "../Usercontroller/activateaccount.js";
 import { ForgotPassword } from "../Usercontroller/Forgotpassword.js";
+import { DeleteUser } from "../Usercontroller/DeleteUser.js";
+import { GetAppointment } from "../Appointment/GetAppointment.js";
+import { Userprofile } from "../Usercontroller/profileInfo.js";
 
 const router = express.Router();
 
@@ -13,7 +16,9 @@ router.post("/register", registeraccount);
 router.post("/accountdetailsupdate", Authentication, updateUserInfo);
 router.post("/verifying_account",verifyuser,activateAccount)
 router.post("/forgot_password",Authentication,ForgotPassword)
-
+router.get("/deleteuser",DeleteUser)
+router.get("/all_appointments",Authentication,GetAppointment)
+router.get("/profile",Authentication,Userprofile)
 
 
 export default router

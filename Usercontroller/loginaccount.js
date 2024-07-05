@@ -35,7 +35,9 @@ export const login =async (req, res) => {
       uniqueId: isUser.uniqueId,
       profilePicture: isUser.profilePicture,
       accesstoken:accesstoken,
-      refreshtoken:refreshtoken
+      refreshtoken:refreshtoken,
+      name:isUser.name,
+      email:isUser.email,
     },
   });
 };
