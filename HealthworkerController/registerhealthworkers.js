@@ -7,7 +7,7 @@ import { sendOneTimePassword } from "../utils/MailNotification.js";
 import all_workers from "../database/models/AllworkersId.js";
 
 export const registerHealthworkeraccount = async (req, res) => {
-  const { name, email, password, healthworkerId,phone } = req.body;
+  const { name, email, password, healthworkerId, phone } = req.body;
   if (!name || !email || !password || !healthworkerId || !phone) {
     return res.status(StatusCodes.BAD_REQUEST).json({
       msg: "Please provide the missing details",
@@ -35,8 +35,8 @@ export const registerHealthworkeraccount = async (req, res) => {
     });
   }
   const confirmId = await all_workers.findOne({
-     healthWorkerId:healthworkerId
-  })
+    healthWorkerId: healthworkerId,
+  });
   if (!confirmId) {
     return res.status(400).json({
       msg: "Couldn't find your find Contact your administrator to solve this problem",
@@ -48,11 +48,12 @@ export const registerHealthworkeraccount = async (req, res) => {
       msg: "Could not create please try again",
     });
   }
-
+  userCreated.isVerifiedByOrganization = true;
+  userCreated.save();
   const OTP = await userCreated.createActivationToken();
   const hashotp = await userCreated.HashOtp(OTP.activationcode);
   const createOTP = await storeOTP.create({
-    owner: userCreated.uniqueId,
+    owner: userCreated.healthworkerId,
     otpvalue: hashotp.HashedOtp,
   });
   sendOneTimePassword({

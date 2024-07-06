@@ -5,7 +5,6 @@ const OtpSchema = new mongoose.Schema(
   {
     owner: {
       type: String,
-      ref: "user",
     },
     otpvalue: {
       type: String,

@@ -13,6 +13,7 @@ router.post("/healthworker",getAllHealthworkers)
 router.post("/login",SignHealthworker)
 router.post("/verify", Verifyhealthworker,ActivateAccount);
 router.delete("/deleteh",HDelete)
+router.post("/searchworker",getAllHealthworkers)
 
 
 export default router
