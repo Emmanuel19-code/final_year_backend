@@ -1,9 +1,8 @@
 import health_worker from "../database/models/Healthworker.js";
-
+import { StatusCodes } from "http-status-codes";
 
 export const SignHealthworker = async(req,res) =>{
    const {email,password,healthworkerId} = req.body
-   console.log("this is called",req.body);
    if(!email || !password || !healthworkerId){
     return res.status(400).json({
         msg:"please provide the missing information"

@@ -4,7 +4,9 @@ import { getAllHealthworkers } from "../HealthworkerController/getHealthworkers.
 import { SignHealthworker } from "../HealthworkerController/sign_In_healthworker.js";
 import { HDelete } from "../HealthworkerController/HDelete.js";
 import { ActivateAccount } from "../HealthworkerController/activateaccount.js";
-import { Verifyhealthworker } from "../middlewares/authentication.js";
+import { HealthworkerAuthetication, Verifyhealthworker } from "../middlewares/authentication.js";
+
+
 
 const router = express.Router();
 
@@ -14,6 +16,7 @@ router.post("/login",SignHealthworker)
 router.post("/verify", Verifyhealthworker,ActivateAccount);
 router.delete("/deleteh",HDelete)
 router.post("/searchworker",getAllHealthworkers)
+
 
 
 export default router

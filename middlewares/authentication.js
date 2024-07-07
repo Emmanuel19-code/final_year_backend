@@ -66,7 +66,6 @@ export const Verifyhealthworker = async (req, res, next) => {
      const token = authToken.split(" ")[1];
      console.log(token);
      const payload = jwt.verify(token, process.env.TOKEN_SECRET);
-     console.log(payload);
      req.health_Worker = { healthworkerId: payload.healthworkerId };
      next();
    } catch (error) {
@@ -102,3 +101,30 @@ export const Authentication = async (req, res, next) => {
     }
   }
 };
+
+
+export const HealthworkerAuthetication = async (req,res,next)=>{
+ try {
+   const authToken = req.headers.authorization;
+   if (!authToken || !authToken.startsWith("Bearer")) {
+     return res.status(400).json({
+       msg: "Please Sign In ",
+     });
+   }
+   const token = authToken.split(" ")[1];
+   const payload = jwt.verify(token, process.env.ACCESS_TOKEN);
+   req.health_Worker = { healthworkerId: payload.healthworkerId };
+   next();
+ } catch (error) {
+   if (error.message == "jwt expired") {
+     return res.status(400).json({
+       msg: "Please log into your account",
+     });
+   } else {
+     res.status(400).json({
+       msg: "an error occured",
+       error: error,
+     });
+   }
+ }
+}

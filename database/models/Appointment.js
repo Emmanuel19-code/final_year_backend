@@ -2,14 +2,9 @@ import mongoose from "mongoose"
 import { v4 as uuidv4 } from 'uuid';
 
 
-const uniqueToken = uuidv4().split("-")[0];
+//const uniqueToken = uuidv4().split("-")[0];
 
 const appointmentSchema = new mongoose.Schema({
-    appointmentId:{
-        type:String,
-        unique:true,
-        default:uniqueToken
-    },
     patientId:{
         type:String,
         required:true
@@ -19,7 +14,7 @@ const appointmentSchema = new mongoose.Schema({
         required:true
     },
     appointmentDate:{
-        type:Date,
+        type:String,
         required:true
     },
     appointmentTime:{
