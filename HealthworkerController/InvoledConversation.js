@@ -1,9 +1,9 @@
 import conversation from "../database/models/conversation.js";
-import health_worker from "../database/models/Healthworker.js";
+import user from "../database/models/user.js";
 
 export const InvolvedConversation = async (req, res) => {
   try {
-    const userId = req.user.uniqueId;
+    const userId = req.health_Worker.healthworkerId;
     const conversations = await conversation.find({ participants: userId });
     if (!conversations || conversations.length === 0) {
       return res.status(404).json({
@@ -14,14 +14,14 @@ export const InvolvedConversation = async (req, res) => {
       conversations.map(async (conversation) => {
         const notUser = conversation.participants.find((id) => id != userId);
         console.log(notUser);
-        const consultant = await health_worker.findOne({
-          healthworkerId: notUser,
+        const consultant = await user.findOne({
+          uniqueId: notUser,
         });
         if (consultant) {
           return {
             user: {
               name: consultant.name,
-              healthworkerId: consultant.healthworkerId,
+              uniqueId: consultant.uniqueId,
               phone: consultant.phone,
               email: consultant.email,
             },

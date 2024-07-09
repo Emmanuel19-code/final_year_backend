@@ -1,38 +1,6 @@
 import jwt from "jsonwebtoken";
 import { StatusCodes } from "http-status-codes";
 
-//export const Authentication = async (req, res, next) => {
-//  const { accessToken, refreshToken } = req.signedCookies;
-//  try {
-//    if (!accessToken || !refreshToken) {
-//      return res.json({
-//        msg: "Please Login into your account",
-//      });
-//    }
-//    const payload = jwt.verify(accessToken, process.env.ACCESS_TOKEN);
-//    req.user = {
-//      uniqueId: payload.uniqueId,
-//      username: payload.username,
-//      role: payload.role,
-//    };
-//    next();
-//  } catch (error) {
-//    return res.status(StatusCodes.BAD_REQUEST).json({
-//      msg: "An error occured while authenticating",
-//    });
-//  }
-//};
-//
-//export const authorizePermision = (...roles) => {
-//  return (req, res, next) => {
-//    if (!roles.includes(req.user.role)) {
-//      return res.status(StatusCodes.BAD_REQUEST).json({
-//        msg: "You do not have permission to perform this action",
-//      });
-//    }
-//    next();
-//  };
-//};
 
 export const verifyuser = async (req, res, next) => {
   try {

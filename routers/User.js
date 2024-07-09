@@ -8,7 +8,6 @@ import { ForgotPassword } from "../Usercontroller/Forgotpassword.js";
 import { DeleteUser } from "../Usercontroller/DeleteUser.js";
 import { GetAppointment } from "../Appointment/GetAppointment.js";
 import { Userprofile } from "../Usercontroller/profileInfo.js";
-import getConversation from "../Conversationcontroller/getconversation.js";
 import { InvolvedConversation } from "../Conversationcontroller/InvoledConversation.js";
 
 

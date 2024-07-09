@@ -5,6 +5,7 @@ import { SignHealthworker } from "../HealthworkerController/sign_In_healthworker
 import { HDelete } from "../HealthworkerController/HDelete.js";
 import { ActivateAccount } from "../HealthworkerController/activateaccount.js";
 import { HealthworkerAuthetication, Verifyhealthworker } from "../middlewares/authentication.js";
+import { InvolvedConversation } from "../HealthworkerController/InvoledConversation.js";
 
 
 
@@ -16,6 +17,7 @@ router.post("/login",SignHealthworker)
 router.post("/verify", Verifyhealthworker,ActivateAccount);
 router.delete("/deleteh",HDelete)
 router.post("/searchworker",getAllHealthworkers)
+router.get("/get_conversation",HealthworkerAuthetication,InvolvedConversation)
 
 
 
