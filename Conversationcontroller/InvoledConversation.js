@@ -13,7 +13,6 @@ export const InvolvedConversation = async (req, res) => {
     const conversationUserData = await Promise.all(
       conversations.map(async (conversation) => {
         const notUser = conversation.participants.find((id) => id != userId);
-        console.log(notUser);
         const consultant = await health_worker.findOne({
           healthworkerId: notUser,
         });

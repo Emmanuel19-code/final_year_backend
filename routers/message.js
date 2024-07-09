@@ -1,9 +1,11 @@
 import express from "express";
-import sendMessage from "../Message/sendmessage.js";
+import { MessageInConversation } from "../Message/messageInConv.js";
+
 
 const router = express.Router()
 
-router.post("newmessage/",sendMessage)
+router.get("/getmessages/:conversationId",MessageInConversation)
+
 
 
 

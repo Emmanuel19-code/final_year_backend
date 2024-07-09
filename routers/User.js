@@ -9,6 +9,7 @@ import { DeleteUser } from "../Usercontroller/DeleteUser.js";
 import { GetAppointment } from "../Appointment/GetAppointment.js";
 import { Userprofile } from "../Usercontroller/profileInfo.js";
 import { InvolvedConversation } from "../Conversationcontroller/InvoledConversation.js";
+import SendMessage from "../Usercontroller/sendmessage.js";
 
 
 const router = express.Router();
@@ -22,6 +23,7 @@ router.get("/deleteuser",DeleteUser)
 router.get("/all_appointments",Authentication,GetAppointment)
 router.get("/profile",Authentication,Userprofile)
 router.get("/get_conversation",Authentication,InvolvedConversation)
+router.post("/send_message",Authentication,SendMessage)
 
 
 export default router
