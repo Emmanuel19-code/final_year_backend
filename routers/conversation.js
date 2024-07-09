@@ -1,11 +1,12 @@
 import express from "express";
 import createConversation from "../Conversationcontroller/createconversation.js";
 import getConversation from "../Conversationcontroller/getconversation.js";
+import {  Authentication } from "../middlewares/authentication.js";
 
 const router = express.Router()
 
-router.post("/create_conversation",createConversation)
-router.get("/get_conversation:user_id",getConversation)
+router.post("/user_create_conversation",Authentication,createConversation)
+router.get("/get_conversation:user_id",Authentication,getConversation)
 
 
 export default router

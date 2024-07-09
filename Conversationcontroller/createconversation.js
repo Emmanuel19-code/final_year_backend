@@ -1,32 +1,39 @@
-import conversation from "../database/models/conversation.js";
+import Conversation from "../database/models/conversation.js";
 
-
-const createConversation = async(req,res) =>{
-   try {
-     const { participantId } = req.body;
-     if (participantId === req.user.id) {
-       return res.status(400).json({
-        msg:"cannot create a conversation with yourself"
-       }) 
+const createConversation = async (req, res) => {
+  try {
+    const { participantId } = req.body;
+    if (participantId === req.user.uniqueId) {
+      return res.status(400).json({
+        msg: "cannot create a conversation with yourself",
+      });
+    }
+     const existingConversation = await Conversation.findOne({
+       participants: { $all: [req.user.uniqueId, participantId] },
+     });
+     if(existingConversation){
+        return res.status(400).json({
+          msg:"you already have a conversation with this user"
+        })
      }
-     let exist_conversation = await conversation.findOne({
-       participants: { $all: [req.user.id, participantId] },
-     });
+    let newConversation = await Conversation.create({
+      participants: [req.user.uniqueId, participantId],
+    });
+    if (!newConversation) {
+      return res.status(400).json({
+        msg: "Please try again",
+      });
+    }
 
-     if (!exist_conversation) {
-       conversation = new conversation({
-         participants: [req.user.id, participantId],
-       });
-       await conversation.save();
-     }
-     res.status(201).json({
-        msg:"conversation created "
-     });
-   } catch (err) {
-     res.status(400).send({
-        msg:"an error occured whiles create conversation"
-     });
-   }
-}
+    res.status(201).json({
+      msg: "conversation created",
+    });
+  } catch (err) {
+    console.log(err);
+    res.status(400).send({
+      msg: "an error occurred while creating conversation",
+    });
+  }
+};
 
-export default createConversation
+export default createConversation;

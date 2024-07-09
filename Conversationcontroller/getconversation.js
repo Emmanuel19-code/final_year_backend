@@ -7,8 +7,7 @@ const getConversation = async (req, res) => {
     const conversations = await conversation.find({
       participants: { $in: [user_id] },
     });
-
-    // Get user details for other participants
+    
     const conversationUserdata = await Promise.all(
       conversations.map(async (conversation) => {
         const receiver_id = conversation.participants.find(

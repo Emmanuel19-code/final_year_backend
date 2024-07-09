@@ -8,6 +8,8 @@ import { ForgotPassword } from "../Usercontroller/Forgotpassword.js";
 import { DeleteUser } from "../Usercontroller/DeleteUser.js";
 import { GetAppointment } from "../Appointment/GetAppointment.js";
 import { Userprofile } from "../Usercontroller/profileInfo.js";
+import getConversation from "../Conversationcontroller/getconversation.js";
+import { InvolvedConversation } from "../Conversationcontroller/InvoledConversation.js";
 
 
 const router = express.Router();
@@ -20,6 +22,7 @@ router.post("/forgot_password",Authentication,ForgotPassword)
 router.get("/deleteuser",DeleteUser)
 router.get("/all_appointments",Authentication,GetAppointment)
 router.get("/profile",Authentication,Userprofile)
+router.get("/get_conversation",Authentication,InvolvedConversation)
 
 
 export default router

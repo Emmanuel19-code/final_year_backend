@@ -6,7 +6,7 @@ const arrayLimit = (val) => {
 
 const conversationSchema = new mongoose.Schema(
   {
-    conversation: {
+    participants: {
       type: Array,
       required: true,
       validate: [arrayLimit, "{PATH} exceeds the limit of 2 participants"],
@@ -15,8 +15,6 @@ const conversationSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
+const conversation = mongoose.model("Conversation", conversationSchema);
 
-
-const conversation = mongoose.model("conversation",conversationSchema)
-
-export default conversation
+export default conversation;
