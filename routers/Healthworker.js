@@ -6,6 +6,7 @@ import { HDelete } from "../HealthworkerController/HDelete.js";
 import { ActivateAccount } from "../HealthworkerController/activateaccount.js";
 import { HealthworkerAuthetication, Verifyhealthworker } from "../middlewares/authentication.js";
 import { InvolvedConversation } from "../HealthworkerController/InvoledConversation.js";
+import SendMessage from "../HealthworkerController/sendmessage.js";
 
 
 
@@ -18,6 +19,7 @@ router.post("/verify", Verifyhealthworker,ActivateAccount);
 router.delete("/deleteh",HDelete)
 router.post("/searchworker",getAllHealthworkers)
 router.get("/get_conversation",HealthworkerAuthetication,InvolvedConversation)
+router.post("/send_message",HealthworkerAuthetication,SendMessage)
 
 
 

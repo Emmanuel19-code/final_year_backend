@@ -9,9 +9,13 @@ import healthworkerRoute from "./routers/Healthworker.js"
 import conversationRoute from "./routers/conversation.js"
 import messageRoute from "./routers/message.js"
 import hospitalRoute from "./routers/hospital.js"
-import conversationRouter from "./routers/conversation.js"
+import http from "http";
+import { Server } from "socket.io";
+import createRouter from "./routers/User.js";
 
 const app = express();
+const server = http.createServer(app);
+const io = new Server(server);
 
 app.use(cors());
 app.use(express.json({ limit: "50mb" }));
@@ -23,7 +27,7 @@ app.get("/", (req, res) => {
 
 
 
-app.use("/api/v1/user", userRoute);
+app.use("/api/v1/user", createRouter(io));
 app.use("/api/v1/appointment",appointmentRoute)
 app.use("/api/v1/consultant",healthworkerRoute)
 app.use("/api/v1/chat",conversationRoute)
@@ -34,6 +38,14 @@ app.use("/api/v1/conversation",conversationRoute)
 app.listen(5000, () => {
   connect();
   console.log("server is running 🚀🚀");
+});
+
+io.on("connection", (socket) => {
+  console.log("a user connected");
+
+  socket.on("disconnect", () => {
+    console.log("user disconnected");
+  });
 });
 
 const connect =()=>{
