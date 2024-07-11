@@ -5,19 +5,6 @@ import client from "../database/redis.js";
 export const InvolvedConversation = async (req, res) => {
   try {
     const userId = req.health_Worker.healthworkerId;
-    const cacheKey = `conversations:${userId}`;
-    // Ensure Redis client is connected
-    if (!client.isOpen) {
-      await client.connect();
-    }
-    // Check if the data is in the cache
-    const cachedData = await client.get(cacheKey);
-    if (cachedData) {
-      // If data is found in the cache, return it
-      return res.status(200).json({
-        data: JSON.parse(cachedData),
-      });
-    } else {
       // If data is not in the cache, fetch it from the database
       const conversations = await conversation.find({ participants: userId });
       if (!conversations || conversations.length === 0) {
@@ -28,8 +15,7 @@ export const InvolvedConversation = async (req, res) => {
       const conversationUserData = await Promise.all(
         conversations.map(async (conversation) => {
           const notUser = conversation.participants.find((id) => id != userId);
-          console.log(notUser);
-          const consultant = await user.find({
+          const consultant = await user.findOne({
             uniqueId: notUser,
           });
           if (consultant) {
@@ -45,11 +31,10 @@ export const InvolvedConversation = async (req, res) => {
           }
         })
       );
-      await client.setEx(cacheKey, 86400, JSON.stringify(conversationUserData)); //holding data for a day
       return res.status(200).json({
         data: conversationUserData,
       });
-    }
+    
   } catch (err) {
     console.error("Error fetching user conversations:", err);
 
