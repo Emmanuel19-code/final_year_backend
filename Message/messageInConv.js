@@ -1,9 +1,10 @@
-import message from "../database/models/Messages.js"; 
+import message from "../database/models/Messages.js";
 
 
 export const MessageInConversation = async (req, res) => {
   try {
     const { conversationId } = req.params;
+
     if (!conversationId) {
       return res.status(400).json({
         msg: "Conversation ID is required",
@@ -15,9 +16,8 @@ export const MessageInConversation = async (req, res) => {
         msg: "There are no messages in this conversation",
       });
     }
-    console.log(messages);
     return res.status(200).json({
-      messages, 
+      messages,
     });
   } catch (error) {
     return res.status(500).json({
