@@ -39,14 +39,14 @@ const healthworker = new mongoose.Schema(
         default:false
     },
     startTime:{
-      type:Date,
+      type:String,
       required:true,
-      default:Date.now()
+      
     },
     endTime:{
-      type:Date,
+      type:String,
       required:true,
-      default:Date.now()
+      
     },
     specialty:{
       type:String

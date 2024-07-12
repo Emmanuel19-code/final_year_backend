@@ -1,40 +1,46 @@
 import user from "../database/models/user.js";
 
 
-export const updateUserInfo =async (req, res) => {
-  const { email, name } = req.body;
+export const updateUserInfo = async (req, res) => {
+  const { email, phone, Address } = req.body;
   const user_id = req.user.uniqueId;
-  if (!user_id) {
+  const filter = { uniqueId: user_id };
+
+  // Create the update object dynamically
+  const updateFields = {};
+  if (email) updateFields.email = email;
+  if (phone) updateFields.phone = phone;
+  if (Address) updateFields.Address = Address;
+
+  // If no fields to update, return an error response
+  if (Object.keys(updateFields).length === 0) {
     return res.status(400).json({
-      msg: "please provide the user id",
+      msg: "No fields to update",
     });
   }
-  if (!(email && name)) {
-    return res.status(400).json({
-      msg: "please provide the missing fields",
+
+  const updateDoc = {
+    $set: updateFields,
+  };
+
+  try {
+    const result = await user.findOneAndUpdate(filter, updateDoc, {
+      new: true,
+    });
+    if (!result) {
+      return res.status(400).json({
+        msg: "Please try again",
+      });
+    }
+    res.status(200).json({
+      msg: "Successfully updated",
+      data: result,
+    });
+  } catch (error) {
+    res.status(500).json({
+      msg: "Server error",
+      error: error.message,
     });
   }
-  const isUser = await user.findOne({ user_id });
-  if (!isUser) {
-    return res.status(400).json({
-      msg: "user does not exist",
-    });
-  }
-  if (isUser.email === email) {
-    return res.status(400).json({
-      msg: "old and new email cannot be the same",
-    });
-  }
-  if (isUser.name === name) {
-    return res.status(400).json({
-      msg: "old and new name cannot be the same",
-    });
-  }
-  isUser.email = email;
-  isUser.name = name;
-  isUser.save();
-  res.status(200).json({
-    msg: "details successfully updated",
-    data: isUser,
-  });
 };
+

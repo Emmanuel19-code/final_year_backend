@@ -3,7 +3,7 @@ import message from "../database/models/Messages.js";
 
 const SendMessage = async(req,res)=>{
   try {
-    console.log(req.health_Worker.healthworkerId);
+    
     const { conversationId,  content } = req.body;
     const newmessage = await message.create({
       conversationId: conversationId,
