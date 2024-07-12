@@ -26,7 +26,7 @@ export const UpdateHealthworkerInfo = async (req, res) => {
   try {
     const result = await health_worker.findOneAndUpdate(filter, updateDoc, {
       new: true,
-    });
+    })
     if (!result) {
       return res.status(400).json({
         msg: "Please try again",

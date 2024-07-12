@@ -8,6 +8,7 @@ import { HealthworkerAuthetication, Verifyhealthworker } from "../middlewares/au
 import { InvolvedConversation } from "../HealthworkerController/InvoledConversation.js";
 import SendMessage from "../HealthworkerController/sendmessage.js";
 import { UpdateHealthworkerInfo } from "../HealthworkerController/updateHealthworkerdetails.js";
+import { Consultantprofile } from "../HealthworkerController/getConsultantProfile.js";
 
 
 
@@ -22,6 +23,6 @@ router.post("/searchworker",getAllHealthworkers)
 router.get("/get_conversation",HealthworkerAuthetication,InvolvedConversation)
 router.post("/send_message",HealthworkerAuthetication,SendMessage)
 router.post("/healthworkerupdate_details",HealthworkerAuthetication,UpdateHealthworkerInfo)
-
+router.get("/consultant_profile",HealthworkerAuthetication,Consultantprofile)
 
 export default router

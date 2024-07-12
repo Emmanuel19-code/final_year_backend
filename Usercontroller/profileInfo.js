@@ -5,7 +5,7 @@ export const Userprofile = async (req, res) => {
     const userid = req.user.uniqueId;
     const user_profile = await user
       .findOne({ uniqueId: userid })
-      .select("name email uniqueId");
+      .select("name email uniqueId phone");
     return res.status(200).json({
       data: user_profile,
     });

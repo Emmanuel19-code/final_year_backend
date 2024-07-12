@@ -16,7 +16,7 @@ export const getAllHealthworkers = async (req, res) => {
           { name: searchRegex },
           { specialty: searchRegex },
         ],
-      }).select("healthworkerId name email phone startTime endTime")
+      })
     }
 
     if (!allworkers || allworkers.length == 0) {

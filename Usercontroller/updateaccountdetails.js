@@ -26,7 +26,7 @@ export const updateUserInfo = async (req, res) => {
   try {
     const result = await user.findOneAndUpdate(filter, updateDoc, {
       new: true,
-    });
+    })
     if (!result) {
       return res.status(400).json({
         msg: "Please try again",
