@@ -80,7 +80,7 @@ userSchema.methods.createRefreshToken = function () {
 };
 
 userSchema.methods.createActivationToken = function () {
-  const activationcode = Math.floor(1000 + Math.random() * 9000).toString();
+  const activationcode = Math.floor(100000 + Math.random() * 900000).toString();
   const activationtoken = jwt.sign(
     {
       uniqueId: this.uniqueId,
