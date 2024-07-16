@@ -38,6 +38,8 @@ export const login =async (req, res) => {
       refreshtoken:refreshtoken,
       name:isUser.name,
       email:isUser.email,
+      role:isUser.role,
+      phone:isUser.phone
     },
   });
 };
