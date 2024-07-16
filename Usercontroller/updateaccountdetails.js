@@ -34,7 +34,16 @@ export const updateUserInfo = async (req, res) => {
     }
     res.status(200).json({
       msg: "Successfully updated",
-      data: result,
+      userInfo: {
+        uniqueId: result.uniqueId,
+        profilePicture: result.profilePicture,
+        accesstoken: accesstoken,
+        refreshtoken: refreshtoken,
+        name: result.name,
+        email: result.email,
+        role: result.role,
+        phone: result.phone,
+      },
     });
   } catch (error) {
     res.status(500).json({
