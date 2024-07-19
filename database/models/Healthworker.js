@@ -40,15 +40,24 @@ const healthworker = new mongoose.Schema(
     },
     startTime:{
       type:String,
-      required:true,
+      
       
     },
     endTime:{
       type:String,
-      required:true,
+      
       
     },
     specialty:{
+      type:String
+    },
+    experience:{
+      type:String
+    },
+    about:{
+      type:String
+    },
+    workingdays:{
       type:String
     }
   },
