@@ -34,6 +34,12 @@ export const SignHealthworker = async(req,res) =>{
          refreshtoken: refreshtoken,
          name: is_staff.name,
          email: is_staff.email,
+         workingdays:is_staff.workingdays,
+         phone:is_staff.phone,
+         endTime:is_staff.endTime,
+         startTime:is_staff.startTime,
+         role:is_staff.role,
+         about:is_staff.about
        },
      });
 }

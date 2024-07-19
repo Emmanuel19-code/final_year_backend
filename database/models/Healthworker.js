@@ -2,11 +2,10 @@ import mongoose from "mongoose";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 
-
 const healthworker = new mongoose.Schema(
   {
-    healthworkerId:{
-        type:String,
+    healthworkerId: {
+      type: String,
     },
     name: {
       type: String,
@@ -16,8 +15,8 @@ const healthworker = new mongoose.Schema(
       required: [true, "please provide this value"],
       unique: true,
     },
-    phone:{
-      type:String
+    phone: {
+      type: String,
     },
     password: {
       type: String,
@@ -34,32 +33,28 @@ const healthworker = new mongoose.Schema(
       type: Boolean,
       default: false,
     },
-    isVerifiedByOrganization:{
-        type:Boolean,
-        default:false
+    isVerifiedByOrganization: {
+      type: Boolean,
+      default: false,
     },
-    startTime:{
-      type:String,
-      
-      
+    startTime: {
+      type: String,
     },
-    endTime:{
-      type:String,
-      
-      
+    endTime: {
+      type: String,
     },
-    specialty:{
-      type:String
+    specialty: {
+      type: String,
     },
-    experience:{
-      type:String
+    experience: {
+      type: String,
     },
-    about:{
-      type:String
+    about: {
+      type: String,
     },
-    workingdays:{
-      type:String
-    }
+    workingdays: {
+      type: String,
+    },
   },
   { timestamps: true }
 );
@@ -94,7 +89,7 @@ healthworker.methods.createAccessToken = function () {
 //creating refreshtoken
 healthworker.methods.createRefreshToken = function () {
   return jwt.sign(
-    { healthworkerId: this.healthworkerId,  role: this.role },
+    { healthworkerId: this.healthworkerId, role: this.role },
     process.env.REFRESH_TOKEN,
     {
       expiresIn: process.env.REFRESH_TOKEN_EXPIRY,
