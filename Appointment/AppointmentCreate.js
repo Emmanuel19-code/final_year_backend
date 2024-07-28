@@ -4,7 +4,6 @@ import appointment from "../database/models/Appointment.js"
 export const createAppointment =async (req,res) =>{
    const { appointment_date, appointment_time, appointment_type,consultant_id} = req.body;
    const patient_id = req.user.uniqueId
-   console.log(patient_id);
   if(!appointment_date || !consultant_id || !appointment_time || !appointment_type){
     return res.status(400).json({
         msg:"please provide the correct details"

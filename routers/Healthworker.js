@@ -9,7 +9,7 @@ import { InvolvedConversation } from "../HealthworkerController/InvoledConversat
 import SendMessage from "../HealthworkerController/sendmessage.js";
 import { UpdateHealthworkerInfo } from "../HealthworkerController/updateHealthworkerdetails.js";
 import { Consultantprofile } from "../HealthworkerController/getConsultantProfile.js";
-
+import { Getbookedappointment } from "../Appointment/getBookedAppointment.js";
 
 
 const router = express.Router();
@@ -24,5 +24,6 @@ router.get("/get_conversation",HealthworkerAuthetication,InvolvedConversation)
 router.post("/send_message",HealthworkerAuthetication,SendMessage)
 router.post("/healthworkerupdate_details",HealthworkerAuthetication,UpdateHealthworkerInfo)
 router.get("/consultant_profile",HealthworkerAuthetication,Consultantprofile)
+router.get("/my_received_appointmetns",HealthworkerAuthetication,Getbookedappointment)
 
 export default router

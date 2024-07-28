@@ -5,6 +5,7 @@ import { StatusCodes } from "http-status-codes";
 import { emailValidation } from "../utils/emailvalidator.js";
 import { sendOneTimePassword } from "../utils/MailNotification.js";
 import all_workers from "../database/models/AllworkersId.js";
+import { serverClient } from "../utils/streamconfig.js";
 
 export const registerHealthworkeraccount = async (req, res) => {
   const { name, email, password, healthworkerId, phone } = req.body;
@@ -61,11 +62,17 @@ export const registerHealthworkeraccount = async (req, res) => {
     email: userCreated.email,
     verificationToken: OTP.activationcode,
   });
-  console.log(userCreated);
   let token = await userCreated.createToken();
+  await serverClient.upsertUser({
+    id: userCreated.healthworkerId,
+    name: userCreated.name,
+    email: userCreated.email,
+  });
+  const stream_token = serverClient.createToken(userCreated.healthworkerId);
   res.status(StatusCodes.CREATED).json({
     msg: "User created",
     otp: OTP.activationcode,
     token: token,
+    stream_token:stream_token
   });
 };

@@ -1,5 +1,4 @@
 import express from "express";
-import userRoute from "./routers/User.js";
 import cors from "cors";
 import cookieParser from "cookie-parser";
 import {} from "dotenv/config";
@@ -12,6 +11,8 @@ import hospitalRoute from "./routers/hospital.js"
 import http from "http";
 import { Server } from "socket.io";
 import createRouter from "./routers/User.js";
+import MeetingRouter from "./routers/meeting.js";
+import handleSocketConnection from "./database/socketconnection.js";
 
 const app = express();
 const server = http.createServer(app);
@@ -34,19 +35,14 @@ app.use("/api/v1/chat",conversationRoute)
 app.use("/api/v1/message",messageRoute)
 app.use("/api/v1/hospital",hospitalRoute)
 app.use("/api/v1/conversation",conversationRoute)
+app.use("/api/v1/meeting",MeetingRouter(io))
 
 app.listen(5000, () => {
   connect();
   console.log("server is running 🚀🚀");
 });
 
-io.on("connection", (socket) => {
-  console.log("a user connected");
-
-  socket.on("disconnect", () => {
-    console.log("user disconnected");
-  });
-});
+handleSocketConnection(io)
 
 const connect =()=>{
   try {
@@ -60,3 +56,4 @@ const connect =()=>{
   }
 }
 
+export default io
