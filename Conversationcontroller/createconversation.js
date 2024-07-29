@@ -3,13 +3,13 @@ import Conversation from "../database/models/conversation.js";
 const createConversation = async (req, res) => {
   try {
     const { participantId } = req.body;
-    if (participantId === req.user.uniqueId) {
+    if (participantId ===  req.health_Worker.healthworkerId) {
       return res.status(400).json({
         msg: "cannot create a conversation with yourself",
       });
     }
      const existingConversation = await Conversation.findOne({
-       participants: { $all: [req.user.uniqueId, participantId] },
+       participants: { $all: [ req.health_Worker.healthworkerId, participantId] },
      });
      if(existingConversation){
         return res.status(400).json({
@@ -17,7 +17,7 @@ const createConversation = async (req, res) => {
         })
      }
     let newConversation = await Conversation.create({
-      participants: [req.user.uniqueId, participantId],
+      participants: [ req.health_Worker.healthworkerId, participantId],
     });
     if (!newConversation) {
       return res.status(400).json({
