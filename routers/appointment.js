@@ -2,21 +2,19 @@ import express from "express"
 import { createAppointment } from "../Appointment/AppointmentCreate.js";
 import { appointmentReschedule } from "../Appointment/AppointmentReschedule.js";
 import {Authentication, HealthworkerAuthetication}  from "../middlewares/authentication.js";
-import {Getbookedappointment} from "../Appointment/getBookedAppointment.js"
 import { Cancelappointment } from "../Appointment/AppointementCancel.js";
 
-const router = express.Router()
 
 
-router.post("/create-appointment",Authentication ,createAppointment)
-router.put("/update-appointment",Authentication ,appointmentReschedule)
-router.get(
-  "/received-appointments",
-  HealthworkerAuthetication,
-  Getbookedappointment
-);
+const appointmentRouter = (io)=>{
+const router = express.Router();
+router.post("/create-appointment", Authentication,(req,res)=>createAppointment(req,res,io));
+router.put("/update-appointment", Authentication, appointmentReschedule);
 router.post("/cancel_appointment", Authentication, Cancelappointment);
+return router
+}
 
 
 
-export default router
+
+export default appointmentRouter
