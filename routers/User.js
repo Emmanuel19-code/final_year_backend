@@ -10,6 +10,7 @@ import { GetAppointment } from "../Appointment/GetAppointment.js";
 import { Userprofile } from "../Usercontroller/profileInfo.js";
 import { InvolvedConversation } from "../Conversationcontroller/InvoledConversation.js";
 import SendMessage from "../Usercontroller/sendmessage.js";
+import { UserGetNotification } from "../NotificationController/UserGetNotice.js";
 
 const createRouter = (io) => {
   const router = express.Router();
@@ -26,7 +27,7 @@ const createRouter = (io) => {
   router.post("/send_message", Authentication, (req, res) =>
     SendMessage(req, res, io)
   );
-
+  router.get("/all_notifications",Authentication,UserGetNotification)
   return router;
 };
 

@@ -9,9 +9,11 @@ export const Getbookedappointment =async (req,res) =>{
           msg: "please provide the details",
         });
       }
-      const booked = await appointment.find({
-        doctorId: doctor_Id,
-      });
+      const booked = await appointment
+        .find({
+          doctorId: doctor_Id,
+        })
+        
       if (!booked) {
         return res.status(400).json({
           msg: "There are no booked appointment for you at the moment",

@@ -12,10 +12,15 @@ import createRouter from "./routers/User.js";
 import MeetingRouter from "./routers/meeting.js";
 import handleSocketConnection from "./database/socketconnection.js";
 import appointmentRouter from "./routers/appointment.js";
+import notificationRouter from "./routers/notifications.js"
 
 const app = express();
 const server = http.createServer(app);
-const io = new Server(server);
+const io = new Server(server, {
+  cors: {
+    origin: "*",
+  },
+});
 
 app.use(cors());
 app.use(express.json({ limit: "50mb" }));
@@ -33,6 +38,7 @@ app.use("/api/v1/consultant",healthworkerRoute)
 app.use("/api/v1/message",messageRoute)
 app.use("/api/v1/hospital",hospitalRoute)
 app.use("/api/v1/meeting",MeetingRouter(io))
+app.use("/api/v1/notifcations",notificationRouter)
 
 app.listen(5000, () => {
   connect();
@@ -40,6 +46,25 @@ app.listen(5000, () => {
 });
 
 handleSocketConnection(io)
+io.on("connection", (socket) => {
+  console.log("a user connected");
+  socket.on("disconnect", () => {
+    console.log("user disconnected");
+  });
+
+  socket.on("joinConversation", ({ conversationId, name, userIdentity }) => {
+    console.log(conversationId, name, userIdentity);
+  });
+
+  socket.on("joinMeeting", () => {
+    console.log("a user joined a meeting");
+  });
+
+  socket.on("newppointment", (message) => {
+    console.log("newppointment received:", message);
+    io.emit("newppointment", message);
+  });
+});
 
 const connect =()=>{
   try {

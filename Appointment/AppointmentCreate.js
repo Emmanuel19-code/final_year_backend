@@ -2,6 +2,7 @@ import appointment from "../database/models/Appointment.js"
 
 
 export const createAppointment =async (req,res,io) =>{
+  
    const { appointment_date, appointment_time, appointment_type,consultant_id} = req.body;
    const patient_id = req.user.uniqueId
   if(!appointment_date || !consultant_id || !appointment_time || !appointment_type){
@@ -22,7 +23,7 @@ export const createAppointment =async (req,res,io) =>{
         msg:"please try again"
      })
   }
-  io.emit("newppointment",create)
+  io.emit("newppointment", create);
   res.status(200).json({
     msg:"you appointment has been created"
   })
