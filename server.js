@@ -19,6 +19,7 @@ const server = http.createServer(app);
 const io = new Server(server, {
   cors: {
     origin: "*",
+    method:["GET","POST"]
   },
 });
 
@@ -27,26 +28,12 @@ app.use(express.json({ limit: "50mb" }));
 app.use(cookieParser(process.env.COOKIE_PARSER_SECRET));
 
 app.get("/", (req, res) => {
-  res.status(200).send(`<h1>Starting your project</h1>`);
+  res.status(200).send(`<h1>Starting your project</h1>`)
 });
 
-
-
-app.use("/api/v1/user", createRouter(io));
-app.use("/api/v1/appointment",appointmentRouter(io))
-app.use("/api/v1/consultant",healthworkerRoute)
-app.use("/api/v1/message",messageRoute)
-app.use("/api/v1/hospital",hospitalRoute)
-app.use("/api/v1/meeting",MeetingRouter(io))
-app.use("/api/v1/notifcations",notificationRouter)
-
-app.listen(5000, () => {
-  connect();
-  console.log("server is running 🚀🚀");
-});
-
-handleSocketConnection(io)
+handleSocketConnection(io);
 io.on("connection", (socket) => {
+  console.log(socket)
   console.log("a user connected");
   socket.on("disconnect", () => {
     console.log("user disconnected");
@@ -65,6 +52,21 @@ io.on("connection", (socket) => {
     io.emit("newppointment", message);
   });
 });
+
+app.use("/api/v1/user", createRouter(io));
+app.use("/api/v1/appointment",appointmentRouter(io))
+app.use("/api/v1/consultant",healthworkerRoute)
+app.use("/api/v1/message",messageRoute)
+app.use("/api/v1/hospital",hospitalRoute)
+app.use("/api/v1/meeting",MeetingRouter(io))
+app.use("/api/v1/notifcations",notificationRouter)
+
+app.listen(5000, () => {
+  connect();
+  console.log("server is running 🚀🚀");
+});
+
+
 
 const connect =()=>{
   try {

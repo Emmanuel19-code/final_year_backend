@@ -1,6 +1,6 @@
 import user from "../database/models/user.js";
 import { StatusCodes } from "http-status-codes";
-
+import { serverClient } from "../utils/streamconfig.js";
 
 export const login =async (req, res) => {
   const { email, password } = req.body;
@@ -28,7 +28,7 @@ export const login =async (req, res) => {
   }
   const accesstoken = isUser.createAccessToken();
   const refreshtoken = isUser.createRefreshToken();
- // createcookies({ res, accesstoken, refreshtoken });
+ const stream_token = serverClient.createToken(isUser.uniqueId);
   res.status(StatusCodes.OK).json({
     message: "Authentication Successful",
     userInfo: {
@@ -39,7 +39,8 @@ export const login =async (req, res) => {
       name:isUser.name,
       email:isUser.email,
       role:isUser.role,
-      phone:isUser.phone
+      phone:isUser.phone,
+      stream_token:stream_token
     },
   });
 };

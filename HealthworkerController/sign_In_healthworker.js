@@ -1,5 +1,6 @@
 import health_worker from "../database/models/Healthworker.js";
 import { StatusCodes } from "http-status-codes";
+import { serverClient } from "../utils/streamconfig.js";
 
 export const SignHealthworker = async(req,res) =>{
    const {email,password,healthworkerId} = req.body
@@ -24,7 +25,7 @@ export const SignHealthworker = async(req,res) =>{
    }
     const accesstoken = is_staff.createAccessToken();
     const refreshtoken = is_staff.createRefreshToken();
-    //createcookies({ res, accesstoken, refreshtoken });
+    const stream_token = serverClient.createToken(is_staff.healthworkerId);
      res.status(StatusCodes.OK).json({
        message: "Authentication Successful",
        userInfo: {
@@ -39,7 +40,8 @@ export const SignHealthworker = async(req,res) =>{
          endTime:is_staff.endTime,
          startTime:is_staff.startTime,
          role:is_staff.role,
-         about:is_staff.about
+         about:is_staff.about,
+         stream_token:stream_token
        },
      });
 }

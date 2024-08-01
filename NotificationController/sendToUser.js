@@ -1,4 +1,5 @@
 import notificaion from "../database/models/Notification.js";
+import pusher from "../utils/pusherConfig.js";
 
 export const SendNotifcationToUser = async (req, res) => {
   try {
@@ -19,8 +20,13 @@ export const SendNotifcationToUser = async (req, res) => {
         msg: "could not send please try again",
       });
     }
+    await pusher.trigger(`${userId}`, "new-notification", {
+      notification: create,
+    });
+
     res.status(200).json({
       msg: "Notification has been sent",
+      create
     });
   } catch (error) {
     return res.status(400).json({
