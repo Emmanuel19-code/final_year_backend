@@ -1,7 +1,7 @@
 import message from "../database/models/Messages.js";
 import pusher from "../utils/pusherConfig.js";
 
-const SendMessage = async (req, res, io) => {
+const SendMessage = async (req, res) => {
   try {
     const { conversationId, content } = req.body;
     const newMessage = await message.create({
@@ -14,11 +14,9 @@ const SendMessage = async (req, res, io) => {
         message: "message not sent",
       });
     }
-    io.to(conversationId).emit("newMessage", newMessage);
      await pusher.trigger(`${conversationId}`, "new-message", {
        message: newMessage,
      });
-
     res.status(200).json({
       msg: "message successfully sent",
     });

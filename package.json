@@ -16,6 +16,7 @@
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",
     "express": "^4.19.2",
+    "firebase-admin": "^12.3.0",
     "http-status-codes": "^2.3.0",
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.3.2",
@@ -27,6 +28,7 @@
     "redis": "^4.6.15",
     "socket.io": "^4.7.5",
     "stream-chat": "^8.37.0",
+    "stripe": "^16.7.0",
     "uuid": "^9.0.1",
     "validator": "^13.11.0"
   }

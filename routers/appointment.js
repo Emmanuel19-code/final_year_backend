@@ -6,7 +6,7 @@ import { Cancelappointment } from "../Appointment/AppointementCancel.js";
 
 
 
-const appointmentRouter = (io)=>{
+const appointmentRouter = ()=>{
 const router = express.Router();
 router.post("/create-appointment", Authentication,(req,res)=>createAppointment(req,res,io));
 router.put("/update-appointment", Authentication, appointmentReschedule);

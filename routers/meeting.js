@@ -1,7 +1,7 @@
 import express from "express"
 const router = express.Router()
 
-const MeetingRouter = (io) => {
+const MeetingRouter = () => {
   const router = express.Router();
 
   

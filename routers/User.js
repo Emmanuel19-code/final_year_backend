@@ -11,8 +11,7 @@ import { Userprofile } from "../Usercontroller/profileInfo.js";
 import { InvolvedConversation } from "../Conversationcontroller/InvoledConversation.js";
 import SendMessage from "../Usercontroller/sendmessage.js";
 
-
-const createRouter = (io) => {
+const createRouter = () => {
   const router = express.Router();
 
   router.post("/login", login);
@@ -24,10 +23,8 @@ const createRouter = (io) => {
   router.get("/all_appointments", Authentication, GetAppointment);
   router.get("/profile", Authentication, Userprofile);
   router.get("/get_conversation", Authentication, InvolvedConversation);
-  router.post("/send_message", Authentication, (req, res) =>
-    SendMessage(req, res, io)
-  );
-  
+  router.post("/send_message", Authentication, SendMessage);
+
   return router;
 };
 

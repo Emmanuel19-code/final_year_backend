@@ -9,6 +9,24 @@ export const SendNotifcationToUser = async (req, res) => {
         msg: "Please provide the missing fields",
       });
     }
+    const randomColors = [
+      "#D1C4E9",
+      "#20B2AA",
+      "#228B22",
+      "#F5F5DC",
+      "#FFFFE0",
+    ];
+    const getRandomColor = () => {
+      const randomColors = [
+        "#D1C4E9",
+        "#20B2AA",
+        "#228B22",
+        "#B0B0B0",
+        "#001F3F",
+      ];
+      return randomColors[Math.floor(Math.random() * randomColors.length)];
+    };
+    const backgroundColor = getRandomColor();
     const create = await notificaion.create({
       userId,
       title,
