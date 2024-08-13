@@ -12,6 +12,7 @@ import { Consultantprofile } from "../HealthworkerController/getConsultantProfil
 import { Getbookedappointment } from "../Appointment/getBookedAppointment.js";
 import createConversation from "../Conversationcontroller/createconversation.js";
 import { AllAppointments } from "../Appointment/GetAllAppointments.js";
+import { WorkerInDepartMent } from "../HealthworkerController/workerInDepartment.js";
 
 const router = express.Router();
 
@@ -28,5 +29,6 @@ router.get("/consultant_profile",HealthworkerAuthetication,Consultantprofile)
 router.get("/my_received_appointmetns",HealthworkerAuthetication,Getbookedappointment)
 router.post("/create_conversation",HealthworkerAuthetication,createConversation)
 router.get("/all_appointments",HealthworkerAuthetication,AllAppointments)
+router.get("/departmentworkers/:department",WorkerInDepartMent)
 
 export default router
