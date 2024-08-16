@@ -27,7 +27,8 @@ const healthworker = new mongoose.Schema(
     },
     role: {
       type: String,
-      default: "healthworker",
+      enum:["admin","healthWorker"],
+      default: "healthWorker",
     },
     isverified: {
       type: Boolean,
@@ -53,7 +54,16 @@ const healthworker = new mongoose.Schema(
       type: String,
     },
     workingdays: {
-      type: String,
+      type: [String],
+      enum: [
+        "Monday",
+        "Tuesday",
+        "Wednesday",
+        "Thursday",
+        "Friday",
+        "Saturday",
+        "Sunday",
+      ], 
     },
   },
   { timestamps: true }
@@ -129,6 +139,6 @@ healthworker.methods.comparePassword = async function (canditatePassword) {
   const isMatch = await bcrypt.compare(canditatePassword, this.password);
   return isMatch;
 };
-const health_worker = mongoose.model("HealthStaff", healthworker);
+const HealthWorker = mongoose.model("HealthStaff", healthworker);
 
-export default health_worker;
+export default HealthWorker;

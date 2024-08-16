@@ -8,7 +8,7 @@ const SendMessage = async(req,res)=>{
     const newmessage = await message.create({
       conversationId: conversationId,
       content: content,
-      sender: req.health_Worker.healthworkerId,
+      sender: req.healthWorker.healthworkerId,
     });
     if(!newmessage){
        return res.status(400).json({

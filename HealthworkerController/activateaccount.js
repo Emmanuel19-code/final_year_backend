@@ -1,12 +1,12 @@
 import storeOTP from "../database/models/Otp.js";
 import { StatusCodes } from "http-status-codes";
 import jwt from "jsonwebtoken";
-import health_worker from "../database/models/Healthworker.js";
+import HealthWorker from "../database/models/Healthworker.js";
 
 export const ActivateAccount = async (req, res) => {
   try {
      const { activationcode } = req.body;
-     const userId = req.health_Worker.healthworkerId;
+     const userId = req.healthWorker.healthworkerId;
      if (!userId) {
        return res.status(StatusCodes.BAD_REQUEST).json({
          msg: "Please this user does not exist",
@@ -29,7 +29,7 @@ export const ActivateAccount = async (req, res) => {
          msg: "please provide the right OTP value",
        });
      }
-     const unverifieduser = await health_worker.findOne({
+     const unverifieduser = await HealthWorker.findOne({
        healthworkerId: userId,
      });
      unverifieduser.isverified = true;

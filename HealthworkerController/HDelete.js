@@ -1,7 +1,7 @@
-import health_worker from "../database/models/Healthworker.js";
+import HealthWorker from "../database/models/Healthworker.js";
 
 export const HDelete = async (req, res) => {
-  const del = await health_worker.deleteMany()
+  const del = await HealthWorker.deleteMany();
   if(!del){
     return res.status(400).json({
         msg:"couldn't please try again"

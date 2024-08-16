@@ -70,6 +70,15 @@ export const Authentication = async (req, res, next) => {
   }
 };
 
+export const AdminAuthorization = (req, res, next) => {
+  if (req.healthWorker.role !== "admin") {
+    return res.status(403).json({
+      msg: "Access denied. Admins only.",
+    });
+  }
+  next();
+};
+
 
 export const HealthworkerAuthetication = async (req,res,next)=>{
  try {
@@ -81,7 +90,7 @@ export const HealthworkerAuthetication = async (req,res,next)=>{
    }
    const token = authToken.split(" ")[1];
    const payload = jwt.verify(token, process.env.ACCESS_TOKEN);
-   req.health_Worker = { healthworkerId: payload.healthworkerId };
+   req.healthWorker = { healthworkerId: payload.healthworkerId,role:payload.role };
    next();
  } catch (error) {
    if (error.message == "jwt expired") {

@@ -1,8 +1,8 @@
-import health_worker from "../database/models/Healthworker.js";
+import HealthWorker from "../database/models/Healthworker.js";
 
 export const UpdateHealthworkerInfo = async (req, res) => {
   const { email, phone, Address, startTime, endTime, about } = req.body;
-  const user_id = req.health_Worker.healthworkerIdd;
+  const user_id = req.healthWorker.healthworkerId;
   const filter = { uniqueId: user_id };
 
   const updateFields = {};
@@ -24,7 +24,7 @@ export const UpdateHealthworkerInfo = async (req, res) => {
   };
 
   try {
-    const result = await health_worker.findOneAndUpdate(filter, updateDoc, {
+    const result = await HealthWorker.findOneAndUpdate(filter, updateDoc, {
       new: true,
     });
     if (!result) {

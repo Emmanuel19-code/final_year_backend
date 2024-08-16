@@ -1,4 +1,4 @@
-import health_worker from "../database/models/Healthworker.js";
+import HealthWorker from "../database/models/Healthworker.js";
 import { StatusCodes } from "http-status-codes";
 import { serverClient } from "../utils/streamconfig.js";
 
@@ -9,9 +9,9 @@ export const SignHealthworker = async(req,res) =>{
         msg:"please provide the missing information"
     })
    }
-   const is_staff = await health_worker.findOne({
-    email:email
-   })
+   const is_staff = await HealthWorker.findOne({
+     email: email,
+   });
    if(!is_staff){
     return res.status(400).json({
         msg:"this user is not registered as a staff"

@@ -1,4 +1,4 @@
-import health_worker from "../database/models/Healthworker.js";
+import HealthWorker from "../database/models/Healthworker.js";
 
 export const getAllHealthworkers = async (req, res) => {
   try {
@@ -11,12 +11,9 @@ export const getAllHealthworkers = async (req, res) => {
     } else {
       // Create a case-insensitive regex for search that matches the start of the string
       const searchRegex = new RegExp(`^${search}`, "i");
-        allworkers = await health_worker.find({
-        $or: [
-          { name: searchRegex },
-          { specialty: searchRegex },
-        ],
-      })
+        allworkers = await HealthWorker.find({
+          $or: [{ name: searchRegex }, { specialty: searchRegex }],
+        });
     }
 
     if (!allworkers || allworkers.length == 0) {

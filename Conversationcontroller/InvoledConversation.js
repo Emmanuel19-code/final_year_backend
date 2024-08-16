@@ -1,5 +1,5 @@
 import conversation from "../database/models/conversation.js";
-import health_worker from "../database/models/Healthworker.js";
+import HealthWorker from "../database/models/Healthworker.js";
 
 
 export const InvolvedConversation = async (req, res) => {
@@ -15,7 +15,7 @@ export const InvolvedConversation = async (req, res) => {
       const conversationUserData = await Promise.all(
         conversations.map(async (conversation) => {
           const notUser = conversation.participants.find((id) => id != userId);
-          const consultant = await health_worker.findOne({
+          const consultant = await HealthWorker.findOne({
             healthworkerId: notUser,
           });
 

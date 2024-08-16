@@ -3,7 +3,7 @@ import user from "../database/models/user.js";
 
 export const InvolvedConversation = async (req, res) => {
   try {
-    const userId = req.health_Worker.healthworkerId;
+    const userId = req.healthWorker.healthworkerId;
       const conversations = await conversation.find({ participants: userId });
       if (!conversations || conversations.length === 0) {
         return res.status(404).json({
