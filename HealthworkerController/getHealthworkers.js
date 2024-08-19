@@ -13,7 +13,9 @@ export const getAllHealthworkers = async (req, res) => {
       const searchRegex = new RegExp(`^${search}`, "i");
         allworkers = await HealthWorker.find({
           $or: [{ name: searchRegex }, { specialty: searchRegex }],
-        });
+        }).select(
+          "name about workingdays experience specialty endTime startTime phone email healthworkerId"
+        );
     }
 
     if (!allworkers || allworkers.length == 0) {
