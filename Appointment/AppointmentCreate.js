@@ -1,7 +1,7 @@
 import appointment from "../database/models/Appointment.js";
 import pusher from "../utils/pusherConfig.js";
 
-export const createAppointment = async (req, res,io) => {
+export const createAppointment = async (req, res) => {
   try {
     const {
       appointment_date,

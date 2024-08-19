@@ -6,7 +6,7 @@ import { verifyuser, Authentication } from "../middlewares/authentication.js";
 import { activateAccount } from "../Usercontroller/activateaccount.js";
 import { ForgotPassword } from "../Usercontroller/Forgotpassword.js";
 import { DeleteUser } from "../Usercontroller/DeleteUser.js";
-import { GetAppointment } from "../Appointment/GetAppointment.js";
+import { UserGetAppointment } from "../Appointment/UserGetAppointment.js";
 import { Userprofile } from "../Usercontroller/profileInfo.js";
 import { InvolvedConversation } from "../Conversationcontroller/InvoledConversation.js";
 import SendMessage from "../Usercontroller/sendmessage.js";
@@ -20,7 +20,7 @@ const createRouter = () => {
   router.post("/verifying_account", verifyuser, activateAccount);
   router.post("/forgot_password", Authentication, ForgotPassword);
   router.get("/deleteuser", DeleteUser);
-  router.get("/all_appointments", Authentication, GetAppointment);
+  router.get("/all_appointments", Authentication, UserGetAppointment);
   router.get("/profile", Authentication, Userprofile);
   router.get("/get_conversation", Authentication, InvolvedConversation);
   router.post("/send_message", Authentication, SendMessage);

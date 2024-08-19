@@ -9,7 +9,7 @@ import { InvolvedConversation } from "../HealthworkerController/InvoledConversat
 import SendMessage from "../HealthworkerController/sendmessage.js";
 import { UpdateHealthworkerInfo } from "../HealthworkerController/updateHealthworkerdetails.js";
 import { Consultantprofile } from "../HealthworkerController/getConsultantProfile.js";
-import { Getbookedappointment } from "../Appointment/getBookedAppointment.js";
+import { ConsultantGetbookedappointment } from "../Appointment/ConsultantGetbookedappointment.js";
 import createConversation from "../Conversationcontroller/createconversation.js";
 import { AllAppointments } from "../Appointment/GetAllAppointments.js";
 import { WorkerInDepartMent } from "../HealthworkerController/workerInDepartment.js";
@@ -26,7 +26,7 @@ router.get("/get_conversation",HealthworkerAuthetication,InvolvedConversation)
 router.post("/send_message",HealthworkerAuthetication,SendMessage)
 router.put("/healthworkerupdate_details",HealthworkerAuthetication,UpdateHealthworkerInfo)
 router.get("/consultant_profile",HealthworkerAuthetication,Consultantprofile)
-router.get("/my_received_appointmetns",HealthworkerAuthetication,Getbookedappointment)
+router.get("/my_received_appointmetns",HealthworkerAuthetication,ConsultantGetbookedappointment)
 router.post("/create_conversation",HealthworkerAuthetication,createConversation)
 router.get("/all_appointments",HealthworkerAuthetication,AllAppointments)
 router.get("/departmentworkers/:department",WorkerInDepartMent)

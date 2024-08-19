@@ -1,7 +1,7 @@
 import appointment from "../database/models/Appointment.js";
 import client from "../database/redis.js";
 
-export const GetAppointment = async (req, res) => {
+export const UserGetAppointment = async (req, res) => {
   try {
     const user_id = req.user.uniqueId;
     const cacheKey = `appointments:${user_id}`;

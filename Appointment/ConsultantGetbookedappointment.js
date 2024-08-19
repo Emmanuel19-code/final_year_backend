@@ -1,9 +1,9 @@
 import appointment from "../database/models/Appointment.js";
 
 
-export const Getbookedappointment =async (req,res) =>{
+export const ConsultantGetbookedappointment =async (req,res) =>{
     try {
-      const doctor_Id = req.health_Worker.healthworkerId;
+      const doctor_Id = req.healthWorker.healthworkerId;
       if (!doctor_Id) {
         return res.status(400).json({
           msg: "please provide the details",
