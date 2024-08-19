@@ -13,6 +13,7 @@ import { ConsultantGetbookedappointment } from "../Appointment/ConsultantGetbook
 import createConversation from "../Conversationcontroller/createconversation.js";
 import { AllAppointments } from "../Appointment/GetAllAppointments.js";
 import { WorkerInDepartMent } from "../HealthworkerController/workerInDepartment.js";
+import { CompletedAppointment } from "../Appointment/AppointmentCompleted.js";
 
 const router = express.Router();
 
@@ -30,5 +31,6 @@ router.get("/my_received_appointmetns",HealthworkerAuthetication,ConsultantGetbo
 router.post("/create_conversation",HealthworkerAuthetication,createConversation)
 router.get("/all_appointments",HealthworkerAuthetication,AllAppointments)
 router.get("/departmentworkers/:department",WorkerInDepartMent)
+router.put("/mark_appointment_completed/:appointmentId",HealthworkerAuthetication,CompletedAppointment)
 
 export default router
