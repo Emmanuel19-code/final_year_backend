@@ -40,11 +40,11 @@ export const registerHealthworkeraccount = async (req, res) => {
       });
     }
     const confirmId = await allWorkers.findOne({
-      healthWorkerId: healthworkerId,
+      healthworkerId: healthworkerId,
     });
     if (!confirmId) {
       return res.status(400).json({
-        msg: "Couldn't find your find Contact your administrator to solve this problem",
+        msg: "Couldn't confirm your identity Contact your administrator to solve this problem",
       });
     }
     let userCreated = await HealthWorker.create(req.body);

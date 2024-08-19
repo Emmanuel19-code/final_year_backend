@@ -14,7 +14,7 @@ router.post(
   AddworkersId
 );
 router.post(
-  "/update_worker_details:staff_id",
+  "/update_worker_details/:staff_id",
   HealthworkerAuthetication,
   AdminAuthorization,
   AdminUpdateWorker

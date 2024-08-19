@@ -7,6 +7,8 @@ export const ActivateAccount = async (req, res) => {
   try {
      const { activationcode } = req.body;
      const userId = req.healthWorker.healthworkerId;
+     console.log(userId);
+     
      if (!userId) {
        return res.status(StatusCodes.BAD_REQUEST).json({
          msg: "Please this user does not exist",
@@ -41,7 +43,8 @@ export const ActivateAccount = async (req, res) => {
      });
   } catch (error) {
     return res.status(400).json({
-      msg:"an error occured please try again"
+      msg:"an error occured please try again",
+      error:error
     })
   }
  

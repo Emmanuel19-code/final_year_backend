@@ -27,8 +27,8 @@ const healthworker = new mongoose.Schema(
     },
     role: {
       type: String,
-      enum:["admin","healthWorker"],
-      default: "healthWorker",
+      enum:["admin","healthworker"],
+      default: "healthworker",
     },
     isverified: {
       type: Boolean,
