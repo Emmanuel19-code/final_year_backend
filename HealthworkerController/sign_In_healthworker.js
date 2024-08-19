@@ -29,19 +29,19 @@ export const SignHealthworker = async(req,res) =>{
      res.status(StatusCodes.OK).json({
        message: "Authentication Successful",
        userInfo: {
-         uniqueId: is_staff.healthworkerId,
+         healthworkerId: is_staff.healthworkerId,
          profilePicture: is_staff.profilePicture,
          accesstoken: accesstoken,
          refreshtoken: refreshtoken,
          name: is_staff.name,
          email: is_staff.email,
-         workingdays:is_staff.workingdays,
-         phone:is_staff.phone,
-         endTime:is_staff.endTime,
-         startTime:is_staff.startTime,
-         role:is_staff.role,
-         about:is_staff.about,
-         stream_token:stream_token
+         workingdays: is_staff.workingdays,
+         phone: is_staff.phone,
+         endTime: is_staff.endTime,
+         startTime: is_staff.startTime,
+         role: is_staff.role,
+         about: is_staff.about,
+         stream_token: stream_token,
        },
      });
 }
