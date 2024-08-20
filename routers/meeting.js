@@ -1,14 +1,13 @@
 import express from "express"
-const router = express.Router()
+import { HealthworkerAuthetication } from "../middlewares/authentication.js";
+import { CreatingMeetingDetails } from "../MeetingRoom/createMeeting.js";
+import { JoinMeeting } from "../MeetingRoom/joinmeeting.js";
 
-const MeetingRouter = () => {
+
+const MeetingRouter = (io) => {
   const router = express.Router();
-
-  
-  //router.post("/send_message", Authentication, (req, res) =>
-  //  SendMessage(req, res, io)
-  //);
-
+  router.get("/new_meeting",HealthworkerAuthetication,CreatingMeetingDetails)
+  router.post("/join_meeting",JoinMeeting(io))
   return router;
 };
 

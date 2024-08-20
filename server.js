@@ -36,11 +36,39 @@ app.use("/api/v1/appointment", appointmentRouter());
 app.use("/api/v1/consultant", healthworkerRoute);
 app.use("/api/v1/message", messageRoute);
 app.use("/api/v1/hospital", hospitalRoute);
-app.use("/api/v1/meeting", MeetingRouter());
+app.use("/api/v1/meeting", MeetingRouter(io));
 app.use("/api/v1/notifcations", notificationRouter);
 app.use("/api/v1/payment",paymentRouter)
 
-app.listen(5000, () => {
+
+io.on("connection", (socket) => {
+  console.log("a new user",socket.id)
+  socket.on("disconnect", () => {
+    console.log("user disconnected");
+  });
+  socket.on("joined", (message) => {
+    console.log("Joined event received:", message);
+  });
+  
+  socket.on("joinConversation", ({ conversationId, name, userIdentity }) => {
+    console.log(conversationId, name, userIdentity);
+  });
+
+  socket.on("joinMeeting", () => {
+    console.log("a user joined a meeting");
+  });
+
+  socket.on("newppointment", (message) => {
+    console.log("newppointment received:", message);
+    io.emit("newppointment", message)
+  });
+  socket.on("joinRoom", ({name,roomId }) => {
+    console.log(name);
+    console.log(roomId)
+    socket.join(roomId)
+  });
+});
+server.listen(5000, () => {
   connect();
   console.log("server is running 🚀🚀");
 });
