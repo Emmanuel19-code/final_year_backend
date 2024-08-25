@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 
 const transactionSchema = new mongoose.Schema(
   {
-    PaidBy: {
+    paidBy: {
       type: String,
       required: true,
       trim: true,
@@ -18,16 +18,13 @@ const transactionSchema = new mongoose.Schema(
     paymentStatus: {
       type: String,
       enum: ["pending", "failed", "successful"],
-      default: "pending",
+      default: "successful",
       required: true,
     },
     paymentMethod: {
       type: String,
-      enum: [
-        "Credit Card",
-        "Debit Card",
-        "Paypal",
-      ],
+      enum: ["Credit Card", "Debit Card", "Paypal"],
+      default: "Credit Card",
       required: true,
     },
   },
