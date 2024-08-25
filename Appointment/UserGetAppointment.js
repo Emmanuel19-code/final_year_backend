@@ -10,7 +10,6 @@ export const UserGetAppointment = async (req, res) => {
           msg: "you do not have any appointments at this moment",
         });
       }
-      await client.setEx(cacheKey,86400,JSON.stringify(all_appointments));
       res.status(200).json({
         data: all_appointments,
       });
