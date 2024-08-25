@@ -4,18 +4,7 @@ import client from "../database/redis.js";
 export const UserGetAppointment = async (req, res) => {
   try {
     const user_id = req.user.uniqueId;
-    const cacheKey = `appointments:${user_id}`;
-    if (!client.isOpen) {
-      await client.connect();
-    }
-    const cacheDated = await client.get(cacheKey);
-    if (cacheDated) {
-      return res.status(200).json({
-        data: JSON.parse(cacheDated),
-      });
-    } else {
       const all_appointments = await appointment.find({ patientId: user_id });
-      console.log(all_appointments);
       if (all_appointments.length == 0) {
         return res.status(200).json({
           msg: "you do not have any appointments at this moment",
@@ -25,7 +14,6 @@ export const UserGetAppointment = async (req, res) => {
       res.status(200).json({
         data: all_appointments,
       });
-    }
   } catch (error) {
     console.log(error);
     return res.status(400).json({

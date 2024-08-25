@@ -36,7 +36,7 @@ export const createAppointment = async (req, res) => {
       });
     }
 
-    await pusher.trigger("appointments", "new-appointment", {
+    await pusher.trigger("appointments", consultant_id, {
       appointment: create,
     });
 
