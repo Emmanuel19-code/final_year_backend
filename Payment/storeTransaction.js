@@ -9,7 +9,7 @@ export const StoreTransaction = async (req, res) => {
       });
     }
     const storeTransact = await Transaction.create({
-      paidBy: paidBy,
+      paidBy: req.user.uniqueId,
       amount: amount,
     });
     if (!storeTransact) {
