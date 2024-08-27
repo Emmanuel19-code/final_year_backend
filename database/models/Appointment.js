@@ -22,6 +22,9 @@ const appointmentSchema = new mongoose.Schema({
         type:String,
         required:true
     },
+    callId:{
+       type:String,
+    },
     status:{
         type:String,
         enum:["scheduled","canceled","completed"],
