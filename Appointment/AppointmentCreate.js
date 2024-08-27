@@ -1,5 +1,6 @@
 import appointment from "../database/models/Appointment.js";
 import pusher from "../utils/pusherConfig.js";
+import user from "../database/models/user.js";
 
 export const createAppointment = async (req, res) => {
   try {
@@ -20,14 +21,20 @@ export const createAppointment = async (req, res) => {
       return res.status(400).json({
         msg: "Please provide the correct details",
       });
+    }  
+    const founduser = await user.findOne({ uniqueId : patient_id});
+    if(!user){
+       return res.status(404).json({
+        msg:"user not found please create an account"
+       })
     }
-
     const create = await appointment.create({
       appointmentDate: appointment_date,
       doctorId: consultant_id,
       patientId: patient_id,
       appointmentTime: appointment_time,
       appointmentType: appointment_type,
+      patientName: founduser.name,
     });
 
     if (!create) {
@@ -42,6 +49,7 @@ export const createAppointment = async (req, res) => {
 
     res.status(200).json({
       msg: "Your appointment has been created",
+      create
     });
   } catch (error) {
     console.error(error); // Log the error for debugging purposes
