@@ -80,7 +80,7 @@ healthworker.methods.createToken = function () {
     { healthworkerId: this.healthworkerId },
     process.env.TOKEN_SECRET,
     {
-      expiresIn: "30m", 
+      expiresIn: "1d", 
     }
   )
   return token

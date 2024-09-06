@@ -33,8 +33,9 @@ export const Verifyhealthworker = async (req, res, next) => {
      }
      const token = authToken.split(" ")[1];
      console.log(token);
-     
      const payload = jwt.verify(token, process.env.TOKEN_SECRET);
+     console.log(payload);
+     
      req.healthWorker = { healthworkerId: payload.healthworkerId };
      next();
    } catch (error) {

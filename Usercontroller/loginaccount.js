@@ -15,11 +15,11 @@ export const login =async (req, res) => {
       msg: "User is not found",
     });
   }
-  if (isUser.isverified !== true) {
-    return res.status(StatusCodes.BAD_REQUEST).json({
-      msg: "Please verify your account",
-    });
-  }
+  //if (isUser.isverified !== true) {
+  //  return res.status(StatusCodes.BAD_REQUEST).json({
+  //    msg: "Please verify your account",
+  //  });
+  //}
   const isMatch = await isUser.comparePassword(password);
   if (!isMatch) {
     return res.status(StatusCodes.BAD_REQUEST).json({
