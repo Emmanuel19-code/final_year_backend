@@ -15,6 +15,10 @@ const healthworker = new mongoose.Schema(
       required: [true, "please provide this value"],
       unique: true,
     },
+    sex:{
+      type:String,
+      enum:["female","male"]
+    },
     phone: {
       type: String,
     },
