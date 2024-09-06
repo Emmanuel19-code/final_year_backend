@@ -2,9 +2,11 @@ import HealthWorker from "../database/models/Healthworker.js";
 
 export const Consultantprofile = async (req, res) => {
   try {
-    const user_id = req.healthWorker.healthworkerIdd;
+    const user_id = req.healthWorker.healthworkerId;
+    console.log(user_id);
+    
     const user_profile = await HealthWorker.findOne({
-      uniqueId: user_id,
+      healthworkerId: user_id,
     }).select("name email uniqueId phone healthworkerId startTime endTime");
     return res.status(200).json({
       data: user_profile,

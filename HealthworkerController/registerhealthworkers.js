@@ -72,7 +72,7 @@ export const registerHealthworkeraccount = async (req, res) => {
       name: userCreated.name,
       email: userCreated.email,
     });
-    const stream_token = serverClient.createToken(userCreated.healthworkerId);
+    const stream_token =serverClient.createToken(userCreated.healthworkerId);
     res.status(StatusCodes.CREATED).json({
       msg: "User created",
       otp: OTP.activationcode,

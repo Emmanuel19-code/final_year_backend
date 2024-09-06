@@ -76,14 +76,15 @@ healthworker.pre("save", async function () {
 });
 
 healthworker.methods.createToken = function () {
-  return jwt.sign(
+  const token = jwt.sign(
     { healthworkerId: this.healthworkerId },
     process.env.TOKEN_SECRET,
     {
-      expiresIn: "10m",
+      expiresIn: "30m", 
     }
-  );
-};
+  )
+  return token
+}
 
 //creating a accesstoken
 healthworker.methods.createAccessToken = function () {
@@ -128,7 +129,7 @@ healthworker.methods.HashOtp = async function (otpvalue) {
     },
     process.env.HASH_PASSWORD,
     {
-      expiresIn: "10m",
+      expiresIn: "30m",
     }
   );
   return { HashedOtp };

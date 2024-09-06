@@ -35,7 +35,6 @@ export const ActivateAccount = async (req, res) => {
      unverifieduser.isverified = true;
      unverifieduser.save();
      const delotp = await storeOTP.deleteOne({ owner: userId });
-     //res.clearCookie("authcookie");
      res.status(StatusCodes.OK).json({
        msg: "You have been verified successfully",
      });
