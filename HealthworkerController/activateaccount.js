@@ -6,9 +6,7 @@ import HealthWorker from "../database/models/Healthworker.js";
 export const ActivateAccount = async (req, res) => {
   try {
      const { activationcode } = req.body;
-     const userId = req.healthWorker.healthworkerId;
-     console.log(userId);
-     
+     const userId = req.healthWorker.healthworkerId; 
      if (!userId) {
        return res.status(StatusCodes.BAD_REQUEST).json({
          msg: "Please this user does not exist",

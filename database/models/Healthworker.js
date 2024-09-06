@@ -115,7 +115,7 @@ healthworker.methods.createActivationToken = function () {
     },
     process.env.ACTIVATION_TOKEN,
     {
-      expiresIn: "10m",
+      expiresIn: "30m",
     }
   );
   return { activationcode, activationtoken };
