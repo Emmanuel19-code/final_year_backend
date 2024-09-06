@@ -9,8 +9,8 @@ import { serverClient } from "../utils/streamconfig.js";
 
 export const registerHealthworkeraccount = async (req, res) => {
   try {
-    const { name, email, password, healthworkerId, phone } = req.body;
-    if (!name || !email || !password || !healthworkerId || !phone) {
+    const { name, email, password, healthworkerId, phone,department } = req.body;
+    if (!name || !email || !password || !healthworkerId || !phone ||!department) {
       return res.status(StatusCodes.BAD_REQUEST).json({
         msg: "Please provide the missing details",
       });

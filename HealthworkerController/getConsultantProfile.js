@@ -6,7 +6,7 @@ export const Consultantprofile = async (req, res) => {
     console.log(user_id);
     
     const user_profile = await HealthWorker.findOne({
-      healthworkerId: user_id,
+    healthworkerId: user_id,
     }).select("name email uniqueId phone healthworkerId startTime endTime");
     return res.status(200).json({
       data: user_profile,

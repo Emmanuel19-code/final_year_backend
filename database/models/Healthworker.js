@@ -27,7 +27,7 @@ const healthworker = new mongoose.Schema(
     },
     role: {
       type: String,
-      enum:["admin","healthworker"],
+      enum: ["admin", "healthworker"],
       default: "healthworker",
     },
     isverified: {
@@ -44,8 +44,10 @@ const healthworker = new mongoose.Schema(
     endTime: {
       type: String,
     },
-    specialty: {
+    department: {
       type: String,
+      required: true,
+      //enum: ["cardiology", "neurology", "radiology", "oncology", "pediatrics"]
     },
     experience: {
       type: String,
@@ -63,7 +65,7 @@ const healthworker = new mongoose.Schema(
         "Friday",
         "Saturday",
         "Sunday",
-      ], 
+      ],
     },
   },
   { timestamps: true }
